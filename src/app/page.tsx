@@ -115,9 +115,6 @@ export default function HomePage() {
         <BorrowingWorkflow
           onSelectCategory={(category) => handleCategorySelect(category)}
         />
-
-        {/* 6. Community Voices & Reader Reviews */}
-        <ReaderReviews />
       </main>
 
       {/* 7. Comprehensive Dark Footer */}

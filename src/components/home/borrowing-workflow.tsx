@@ -45,53 +45,13 @@ export function BorrowingWorkflow({ onSelectCategory }: BorrowingWorkflowProps) 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <span className="font-mono text-xs font-bold tracking-widest uppercase text-amber-700 dark:text-amber-400">
-            EXTRA SECTION 01 • LIBRARY WORKFLOW & CURATED SHELVES
-          </span>
+         
 
           <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-foreground tracking-tight">
-            How Borrowing Works & Top Categories
+            Top Categories
           </h2>
-
-          <p className="text-muted-foreground text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
-            Borrowing from BookNook takes less than thirty seconds, backed by real-time inventory protection
-            and five dedicated subject collections.
-          </p>
         </div>
 
-        {/* 3 Step Process Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-          {workflowSteps.map((step) => (
-            <div
-              key={step.stepNumber}
-              className="group relative rounded-2xl bg-card p-6 sm:p-8 border border-border/80 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
-            >
-              <div className="space-y-4">
-                {/* Step Pill */}
-                <div className="inline-flex items-center justify-center h-9 w-9 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 font-mono font-bold text-sm border border-emerald-200 dark:border-emerald-800/60">
-                  {step.stepNumber}
-                </div>
-
-                <h3 className="font-serif text-xl font-bold text-foreground group-hover:text-emerald-800 dark:group-hover:text-emerald-300 transition-colors">
-                  {step.title}
-                </h3>
-
-                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                  {step.description}
-                </p>
-              </div>
-
-              {/* Bottom Meta Badges */}
-              <div className="pt-6 mt-6 border-t border-border/70 flex items-center justify-between text-[11px] font-mono text-muted-foreground">
-                <span className="truncate">{step.badge1}</span>
-                <span className="text-foreground font-semibold flex items-center gap-1 shrink-0">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-                  {step.badge2}
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
 
         {/* Categories Grid */}
         <div className="pt-4">

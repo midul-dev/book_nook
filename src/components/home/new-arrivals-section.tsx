@@ -42,8 +42,6 @@ export function NewArrivalsSection({
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-border/80">
         <div className="space-y-2 max-w-2xl">
-         
-
           <h2 className="font-serif text-3xl sm:text-4xl font-bold text-foreground tracking-tight">
             New Arrivals on the Shelf
           </h2>
