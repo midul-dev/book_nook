@@ -1,11 +1,11 @@
-import { Book, BookCategory } from "@/types";
+import { BookCategory, IBook } from "@/types";
 import { BookCard } from "@/components/home/book-card";
 import { Button } from "@/components/ui/button";
 import { Plus, ArrowRight, Filter, BookOpen } from "lucide-react";
 
 interface NewArrivalsSectionProps {
-  books: Book[];
-  onViewDetails: (book: Book) => void;
+  books: IBook[];
+  onViewDetails: (book: IBook) => void;
   onOpenAddBook: () => void;
   selectedCategory?: BookCategory | "All";
   onSelectCategory?: (category: BookCategory | "All") => void;
@@ -13,9 +13,9 @@ interface NewArrivalsSectionProps {
 
 export async function NewArrivalsSection() {
   const res = await fetch("http://localhost:5000/my-books");
-  const books: Book[] = await res.json();
+  const displayedBooks: IBook[] = await res.json();
 
-  const displayedBooks = books.slice(0, 6); // Display only the first 6 books
+  // const displayedBooks = books.slice(0, 6); // Display only the first 6 books
 
   
 
@@ -67,10 +67,6 @@ export async function NewArrivalsSection() {
       {/* Centered CTA */}
       <div className="flex justify-center pt-12">
         <button
-          onClick={() => {
-            const shelfEl = document.getElementById("shelf");
-            shelfEl?.scrollIntoView({ behavior: "smooth" });
-          }}
           className="inline-flex items-center gap-2 px-8 py-3 rounded-xl bg-[#164e38] hover:bg-[#123e2d] active:scale-98 text-white text-sm md:text-base font-medium shadow-md hover:shadow-lg transition-all cursor-pointer"
         >
           <span>See All Books</span>
