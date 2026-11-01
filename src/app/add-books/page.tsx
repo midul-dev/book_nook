@@ -1,22 +1,23 @@
 "use client";
 
 import React, { useState } from "react";
-import { Navbar } from "@/components/layout/navbar";
+
 import { Footer } from "@/components/layout/footer";
-import { TopDevBanner } from "@/components/layout/top-dev-banner";
+
 import { Book, BookCategory } from "@/types";
 import { PlusCircle, Sparkles, CheckCircle2, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 export default function AddBooksPage() {
-  const [title, setTitle] = useState("");
+  
   const [author, setAuthor] = useState("");
   const [category, setCategory] = useState<BookCategory>("Science");
   const [copies, setCopies] = useState("3");
   const [description, setDescription] = useState("");
   const [themeIndex, setThemeIndex] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const themes = [
     {
@@ -57,14 +58,35 @@ export default function AddBooksPage() {
     },
   ];
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit =async (e: React.FormEvent<HTMLFormElement>) => {
+   
+    setLoading(true);
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const newBook = Object.fromEntries(formData.entries()) as { title: string; author: string; category: BookCategory; copies: string; description: string };
-    console.log("New Book Submitted:", newBook);
     
-    
+    try{
+    const res = await fetch("http://localhost:5000/add-books", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newBook),
+    });
+    if (res.ok) {
+       setIsSubmitted(true);
+    }else {
+      alert("Failed to submit book. Please try again.");
+    }
+  }catch (error) {
+    console.error("Error submitting book:", error);
+    alert("An error occurred while submitting the book. Please try again.");
+  }finally {
+    setLoading(false);
+  }
+
   };
+  
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground transition-colors">
@@ -76,30 +98,26 @@ export default function AddBooksPage() {
           <ArrowLeft className="w-3.5 h-3.5" />
           <span>Back to Home Shelf</span>
         </Link>
-
         <div className="bg-card border border-border rounded-3xl p-6 sm:p-10 shadow-xl space-y-6">
-          <div className="space-y-1">
-            <h1 className="font-serif text-3xl sm:text-4xl font-bold text-foreground tracking-tight">
-              Contribute a Book to BookNook
-            </h1>
-            <p className="text-muted-foreground text-sm leading-relaxed">
-              Add a hardcover or paperback from your collection. Readers will be
-              able to discover and borrow it with atomic inventory
-              synchronization.
-            </p>
-          </div>
 
           {isSubmitted ? (
-            <div className="p-6 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-800 text-center space-y-2 animate-in fade-in">
-              <CheckCircle2 className="w-10 h-10 text-emerald-600 dark:text-emerald-400 mx-auto" />
-              <h3 className="font-serif text-xl font-bold text-emerald-900 dark:text-emerald-200">
+            <div className="py-8 px-6 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-800 text-center space-y-3 animate-in fade-in">
+              <CheckCircle2 className="w-12 h-12 text-emerald-600 dark:text-emerald-400 mx-auto" />
+              <h3 className="font-serif text-2xl font-bold text-emerald-900 dark:text-emerald-200">
                 Book Cataloged Successfully!
               </h3>
-              <p className="text-xs text-emerald-800/80 dark:text-emerald-300/80">
+              <p className="text-sm text-emerald-800/80 dark:text-emerald-300/80 max-w-md mx-auto">
                 Your edition has been safely indexed into MongoDB with live copy
                 tracking.
               </p>
-              <div className="pt-2">
+              <div className="pt-4 flex items-center justify-center gap-3">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setIsSubmitted(false)}
+                >
+                  Add Another Book
+                </Button>
                 <Link href="/all-books">
                   <Button
                     size="sm"
@@ -111,6 +129,17 @@ export default function AddBooksPage() {
               </div>
             </div>
           ) : (
+            <>
+          <div className="space-y-1">
+            <h1 className="font-serif text-3xl sm:text-4xl font-bold text-foreground tracking-tight">
+              Contribute a Book to BookNook
+            </h1>
+            <p className="text-muted-foreground text-sm leading-relaxed">
+              Add a hardcover or paperback from your collection. Readers will be
+              able to discover and borrow it with atomic inventory
+              synchronization.
+            </p>
+          </div>
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
                 <label className="block text-xs text-foreground mb-1.5 uppercase">
@@ -158,10 +187,11 @@ export default function AddBooksPage() {
 
               <div>
                 <label className="block text-xs font-mono font-medium text-foreground mb-1.5 uppercase">
-                  Available Copies for Borrowing
+                  Available Copies for Borrowing *
                 </label>
                 <input
                   type="number"
+                  required
                   min="1"
                   max="30"
                   name="copies"
@@ -197,17 +227,18 @@ export default function AddBooksPage() {
 
               <Button
                 type="submit"
-                className="w-full h-11 bg-[#164e38] hover:bg-[#123e2d] text-white font-medium text-sm rounded-xl gap-2 shadow-md cursor-pointer"
+                onClick={() => setIsSubmitted(false)}
+                disabled={loading}
+                className={loading ? "w-full h-11 bg-[#164e38] hover:bg-[#123e2d] text-white font-medium text-sm rounded-xl gap-2 shadow-md cursor-pointer" : "w-full h-11 bg-[#164e38] hover:bg-[#123e2d] text-white font-medium text-sm rounded-xl gap-2 shadow-md cursor-pointer"}
               >
                 <Sparkles className="w-4 h-4" />
-                <span>Publish Book to Library Shelf</span>
+                <span>{loading ? "Publishing..." : "Publish Book to Library Shelf"}</span>
               </Button>
             </form>
+            </>
           )}
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }
