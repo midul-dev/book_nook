@@ -1,6 +1,3 @@
-"use client";
-
-import React, { useState } from "react";
 import { Book, BookCategory } from "@/types";
 import { BookCard } from "@/components/home/book-card";
 import { Button } from "@/components/ui/button";
@@ -14,28 +11,13 @@ interface NewArrivalsSectionProps {
   onSelectCategory?: (category: BookCategory | "All") => void;
 }
 
-export function NewArrivalsSection({
-  books,
-  onViewDetails,
-  onOpenAddBook,
-  selectedCategory = "All",
-  onSelectCategory,
-}: NewArrivalsSectionProps) {
-  const [activeFilter, setActiveFilter] = useState<BookCategory | "All">(selectedCategory);
+export async function NewArrivalsSection() {
+  const res = await fetch("http://localhost:5000/my-books");
+  const books: Book[] = await res.json();
 
-  const categories: (BookCategory | "All")[] = ["All", "Science", "History", "Kids", "Fiction", "Others"];
+  const displayedBooks = books.slice(0, 6); // Display only the first 6 books
 
-  const handleFilter = (cat: BookCategory | "All") => {
-    setActiveFilter(cat);
-    if (onSelectCategory) {
-      onSelectCategory(cat);
-    }
-  };
-
-  const displayedBooks =
-    activeFilter === "All"
-      ? books
-      : books.filter((book) => book.category.toLowerCase() === activeFilter.toLowerCase());
+  
 
   return (
     <section id="shelf" className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
@@ -50,7 +32,6 @@ export function NewArrivalsSection({
         {/* Action Controls (Add Book & Filter) */}
         <div className="flex flex-wrap items-center gap-3 self-start md:self-end">
           <Button
-            onClick={onOpenAddBook}
             variant="outline"
             className="rounded-xl border-border hover:bg-muted font-medium text-xs sm:text-sm h-10 px-4 gap-1.5 shadow-2xs hover:border-emerald-600/50"
           >
@@ -65,25 +46,13 @@ export function NewArrivalsSection({
         <span className="text-xs font-mono text-muted-foreground flex items-center gap-1 mr-1">
           <Filter className="w-3.5 h-3.5" /> Filter:
         </span>
-        {categories.map((cat) => (
-          <button
-            key={cat}
-            onClick={() => handleFilter(cat)}
-            className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all whitespace-nowrap cursor-pointer ${
-              activeFilter === cat
-                ? "bg-emerald-900 text-white dark:bg-emerald-800 shadow-sm"
-                : "bg-muted/60 text-muted-foreground hover:bg-muted hover:text-foreground"
-            }`}
-          >
-            {cat}
-          </button>
-        ))}
+      
       </div>
 
       {/* Book Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
         {displayedBooks.map((book) => (
-          <BookCard key={book.id} book={book} onViewDetails={onViewDetails} />
+          <BookCard key={book._id} book={book} />
         ))}
       </div>
 

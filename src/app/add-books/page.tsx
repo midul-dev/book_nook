@@ -1,61 +1,13 @@
 "use client";
-
 import React, { useState } from "react";
-
-import { Footer } from "@/components/layout/footer";
-
-import { Book, BookCategory } from "@/types";
+import {BookCategory } from "@/types";
 import { PlusCircle, Sparkles, CheckCircle2, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 export default function AddBooksPage() {
-  const [author, setAuthor] = useState("");
-  const [category, setCategory] = useState<BookCategory>("Science");
-  const [copies, setCopies] = useState("3");
-  const [description, setDescription] = useState("");
-  const [themeIndex, setThemeIndex] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  const themes = [
-    {
-      label: "Cosmic Indigo",
-      gradient: "from-[#1c2c4d] via-[#131f38] to-[#0a1224]",
-      color: "#3b82f6",
-      motif: "cosmic" as const,
-    },
-    {
-      label: "Maritime Rust",
-      gradient: "from-[#85351a] via-[#692913] to-[#451809]",
-      color: "#ea580c",
-      motif: "maritime" as const,
-    },
-    {
-      label: "Crimson Lantern",
-      gradient: "from-[#7e182c] via-[#630f20] to-[#420813]",
-      color: "#e11d48",
-      motif: "lantern" as const,
-    },
-    {
-      label: "Minimalist Slate",
-      gradient: "from-[#292f38] via-[#1d2329] to-[#121619]",
-      color: "#64748b",
-      motif: "minimalist" as const,
-    },
-    {
-      label: "Lapis Observatory",
-      gradient: "from-[#1a3c70] via-[#122b52] to-[#0a1930]",
-      color: "#2563eb",
-      motif: "astronomy" as const,
-    },
-    {
-      label: "Spiced Cinnamon",
-      gradient: "from-[#8a3e1b] via-[#6e2f12] to-[#481c08]",
-      color: "#d97706",
-      motif: "botanical" as const,
-    },
-  ];
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
