@@ -112,11 +112,11 @@ export default function AddBooksPage() {
               </p>
               <div className="pt-4 flex items-center justify-center gap-3">
                 <Button
-                  variant="outline"
+                   className="border border-[#164e38] text-black bg-white hover:bg-[#123e2d] hover:text-white"
                   size="sm"
                   onClick={() => setIsSubmitted(false)}
                 >
-                  Add Another Book
+                  <span>Add Another Book</span> <PlusCircle/>
                 </Button>
                 <Link href="/all-books">
                   <Button
