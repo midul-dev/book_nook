@@ -10,7 +10,6 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 export default function AddBooksPage() {
-  
   const [author, setAuthor] = useState("");
   const [category, setCategory] = useState<BookCategory>("Science");
   const [copies, setCopies] = useState("3");
@@ -58,35 +57,39 @@ export default function AddBooksPage() {
     },
   ];
 
-  const handleSubmit =async (e: React.FormEvent<HTMLFormElement>) => {
-   
-    setLoading(true);
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
     const formData = new FormData(e.currentTarget);
-    const newBook = Object.fromEntries(formData.entries()) as { title: string; author: string; category: BookCategory; copies: string; description: string };
-    
-    try{
-    const res = await fetch("http://localhost:5000/add-books", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newBook),
-    });
-    if (res.ok) {
-       setIsSubmitted(true);
-    }else {
-      alert("Failed to submit book. Please try again.");
-    }
-  }catch (error) {
-    console.error("Error submitting book:", error);
-    alert("An error occurred while submitting the book. Please try again.");
-  }finally {
-    setLoading(false);
-  }
+    const newBook = Object.fromEntries(formData.entries()) as {
+      title: string;
+      author: string;
+      category: BookCategory;
+      copies: string;
+      description: string;
+    };
 
+    try {
+      const res = await fetch("http://localhost:5000/add-books", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newBook),
+      });
+      if (res.ok) {
+        setIsSubmitted(true);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        alert("Failed to submit book. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error submitting book:", error);
+      alert("An error occurred while submitting the book. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
-  
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground transition-colors">
@@ -99,7 +102,6 @@ export default function AddBooksPage() {
           <span>Back to Home Shelf</span>
         </Link>
         <div className="bg-card border border-border rounded-3xl p-6 sm:p-10 shadow-xl space-y-6">
-
           {isSubmitted ? (
             <div className="py-8 px-6 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-800 text-center space-y-3 animate-in fade-in">
               <CheckCircle2 className="w-12 h-12 text-emerald-600 dark:text-emerald-400 mx-auto" />
@@ -112,11 +114,11 @@ export default function AddBooksPage() {
               </p>
               <div className="pt-4 flex items-center justify-center gap-3">
                 <Button
-                   className="border border-[#164e38] text-black bg-white hover:bg-[#123e2d] hover:text-white"
+                  className="border border-[#164e38] text-black bg-white hover:bg-[#123e2d] hover:text-white"
                   size="sm"
                   onClick={() => setIsSubmitted(false)}
                 >
-                  <span>Add Another Book</span> <PlusCircle/>
+                  <span>Add Another Book</span> <PlusCircle />
                 </Button>
                 <Link href="/all-books">
                   <Button
@@ -130,111 +132,118 @@ export default function AddBooksPage() {
             </div>
           ) : (
             <>
-          <div className="space-y-1">
-            <h1 className="font-serif text-3xl sm:text-4xl font-bold text-foreground tracking-tight">
-              Contribute a Book to BookNook
-            </h1>
-            <p className="text-muted-foreground text-sm leading-relaxed">
-              Add a hardcover or paperback from your collection. Readers will be
-              able to discover and borrow it with atomic inventory
-              synchronization.
-            </p>
-          </div>
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div>
-                <label className="block text-xs text-foreground mb-1.5 uppercase">
-                  Book Title *
-                </label>
-                <input
-                  type="text"
-                  required
-                  name="title"
-                  placeholder="e.g. Harry Potter"
-                  className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
-                />
+              <div className="space-y-1">
+                <h1 className="font-serif text-3xl sm:text-4xl font-bold text-foreground tracking-tight">
+                  Contribute a Book to BookNook
+                </h1>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  Add a hardcover or paperback from your collection. Readers
+                  will be able to discover and borrow it with atomic inventory
+                  synchronization.
+                </p>
               </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
                   <label className="block text-xs text-foreground mb-1.5 uppercase">
-                    Author Name *
+                    Book Title *
                   </label>
                   <input
                     type="text"
                     required
-                    name="author"
-                    placeholder="e.g. J. K. Rowling"
+                    name="title"
+                    placeholder="e.g. Harry Potter"
+                    className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs text-foreground mb-1.5 uppercase">
+                      Author Name *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      name="author"
+                      placeholder="e.g. J. K. Rowling"
+                      className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs text-foreground mb-1.5 uppercase">
+                      Category *
+                    </label>
+                    <select
+                      name="category"
+                      className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
+                    >
+                      <option value="Science">Science</option>
+                      <option value="History">History</option>
+                      <option value="Fiction">Fiction</option>
+                      <option value="Kids">Kids</option>
+                      <option value="Others">Others</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-mono font-medium text-foreground mb-1.5 uppercase">
+                    Available Copies for Borrowing *
+                  </label>
+                  <input
+                    type="number"
+                    required
+                    min="1"
+                    max="30"
+                    name="copies"
+                    placeholder="e.g. 3"
                     className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
                   />
                 </div>
 
                 <div>
                   <label className="block text-xs text-foreground mb-1.5 uppercase">
-                    Category *
+                    Image Url / Cover Art *
                   </label>
-                  <select
-                    name="category"
-                    className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
-                  >
-                    <option value="Science">Science</option>
-                    <option value="History">History</option>
-                    <option value="Fiction">Fiction</option>
-                    <option value="Kids">Kids</option>
-                    <option value="Others">Others</option>
-                  </select>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-xs font-mono font-medium text-foreground mb-1.5 uppercase">
-                  Available Copies for Borrowing *
-                </label>
-                <input
-                  type="number"
-                  required
-                  min="1"
-                  max="30"
-                  name="copies"
-                  placeholder="e.g. 3"
-                  className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs text-foreground mb-1.5 uppercase">
-                  Image Url / Cover Art *
-                </label>
-                <input
+                  <input
                     type="text"
                     required
                     name="image"
                     placeholder="e.g. https://example.com/cover.jpg"
                     className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
                   />
-              </div>
+                </div>
 
-              <div>
-                <label className="block text-xs text-foreground mb-1.5 uppercase">
-                  Synopsis / Overview
-                </label>
-                <textarea
-                  rows={4}
-                  name="description"
-                  placeholder="Share a short teaser or context for future readers..."
-                  className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-emerald-500/50 resize-none"
-                />
-              </div>
+                <div>
+                  <label className="block text-xs text-foreground mb-1.5 uppercase">
+                    Synopsis / Overview
+                  </label>
+                  <textarea
+                    rows={4}
+                    name="description"
+                    placeholder="Share a short teaser or context for future readers..."
+                    className="w-full px-4 py-2.5 rounded-xl border border-border bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-emerald-500/50 resize-none"
+                  />
+                </div>
 
-              <Button
-                type="submit"
-                onClick={() => setIsSubmitted(false)}
-                disabled={loading}
-                className={loading ? "w-full h-11 bg-[#164e38] hover:bg-[#123e2d] text-white font-medium text-sm rounded-xl gap-2 shadow-md cursor-pointer" : "w-full h-11 bg-[#164e38] hover:bg-[#123e2d] text-white font-medium text-sm rounded-xl gap-2 shadow-md cursor-pointer"}
-              >
-                <Sparkles className="w-4 h-4" />
-                <span>{loading ? "Publishing..." : "Publish Book to Library Shelf"}</span>
-              </Button>
-            </form>
+                <Button
+                  type="submit"
+                  disabled={loading}
+                  className={
+                    loading
+                      ? "w-full h-11 bg-[#164e38] hover:bg-[#123e2d] text-white font-medium text-sm rounded-xl gap-2 shadow-md cursor-pointer"
+                      : "w-full h-11 bg-[#164e38] hover:bg-[#123e2d] text-white font-medium text-sm rounded-xl gap-2 shadow-md cursor-pointer"
+                  }
+                >
+                  <Sparkles className="w-4 h-4" />
+                  <span>
+                    {loading
+                      ? "Publishing..."
+                      : "Publish Book to Library Shelf"}
+                  </span>
+                </Button>
+              </form>
             </>
           )}
         </div>
