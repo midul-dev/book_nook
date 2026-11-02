@@ -16,10 +16,10 @@ export function BookCard({ book }: BookCardProps) {
 const catalogedDate = book.createdAt 
   ? new Date(book.createdAt).toLocaleDateString('en-US', {
       year: 'numeric',
-      month: 'long', // 'short' dile Nov, 'long' dile November dekhabe
+      month: 'long', 
       day: 'numeric'
     })
-  : "Recently Added"; // Jodi kono boi er date na thake tar jonno fallback
+  : "Recently Added"; 
 
 
   return (
