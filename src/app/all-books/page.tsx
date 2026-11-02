@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import AllBooks from "./_components/AllBooks";
 import { Plus } from "lucide-react";
+import Link from "next/link";
 
 export default async function AllBooksPage() {
   const res = await fetch("http://localhost:5000/all-books");
@@ -12,10 +13,8 @@ export default async function AllBooksPage() {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-border">
           <div className="space-y-2">
-            <span className="font-mono text-xs font-semibold text-emerald-800 dark:text-emerald-400 uppercase tracking-widest">
-              Route: /all-books • Complete Archive
-            </span>
-            <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-foreground tracking-tight">
+           
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground tracking-tight">
               All Books in the Library
             </h1>
             <p className="text-muted-foreground text-sm sm:text-base max-w-2xl">
@@ -24,10 +23,10 @@ export default async function AllBooksPage() {
             </p>
           </div>
 
-          <Button className="self-start md:self-end bg-[#164e38] hover:bg-[#123e2d] text-white gap-1.5 h-10 px-4 rounded-xl">
+          <Link href="/add-books"><Button className="self-start md:self-end bg-[#164e38] hover:bg-[#123e2d] text-white gap-1.5 h-10 px-4 mb-4 rounded-xl">
             <Plus className="w-4 h-4" />
             <span>Add a New Book</span>
-          </Button>
+          </Button></Link>
         </div>
         {/* All-Book Section  */}
         <AllBooks books={books} />
