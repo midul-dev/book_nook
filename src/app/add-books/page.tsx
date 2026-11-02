@@ -5,10 +5,15 @@ import { PlusCircle, Sparkles, CheckCircle2, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { useSession } from "@/lib/auth-client";
 
 export default function AddBooksPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const {data: session} = useSession()
+  const user = session?.user
+
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -21,7 +26,10 @@ export default function AddBooksPage() {
       copies: string;
       description: string;
       image: string;
+      userName: string;
+      userEmail: string;
     };
+    console.log(newBook)
 
     try {
       const res = await fetch("http://localhost:5000/add-books", {
@@ -48,6 +56,7 @@ export default function AddBooksPage() {
         "Book added successfully! It is now available for borrowing.",
       );
     }
+    
   };
 
   return (
@@ -106,6 +115,34 @@ export default function AddBooksPage() {
                 </p>
               </div>
               <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs text-foreground mb-1.5 uppercase">
+                      User Name
+                    </label>
+                    <input
+                      type="text"
+                      name="userName"
+                      value={user?.name || ""}
+                      readOnly
+                      className="w-full px-4 py-2.5 rounded-xl border border-border bg-muted/50 text-sm text-muted-foreground focus:outline-none cursor-not-allowed"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs text-foreground mb-1.5 uppercase">
+                      User Email
+                    </label>
+                    <input
+                      type="email"
+                      name="userEmail"
+                      value={user?.email || ""}
+                      readOnly
+                      className="w-full px-4 py-2.5 rounded-xl border border-border bg-muted/50 text-sm text-muted-foreground focus:outline-none cursor-not-allowed"
+                    />
+                  </div>
+                </div>
+
                 <div>
                   <label className="block text-xs text-foreground mb-1.5 uppercase">
                     Book Title *
