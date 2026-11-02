@@ -22,7 +22,7 @@ import { authClient, signUp } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 
 export default function SignUpPage() {
-    const router = useRouter();
+  const router = useRouter();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -61,14 +61,18 @@ export default function SignUpPage() {
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Enforce Password Validation Criteria     
+    // Enforce Password Validation Criteria
     if (!isPasswordValid) {
       if (!hasMinLength) {
         setPasswordError("Password must be at least 6 characters long.");
       } else if (!hasUppercase) {
-        setPasswordError("Password must include at least one uppercase letter (A-Z).");
+        setPasswordError(
+          "Password must include at least one uppercase letter (A-Z).",
+        );
       } else if (!hasLowercase) {
-        setPasswordError("Password must include at least one lowercase letter (a-z).");
+        setPasswordError(
+          "Password must include at least one lowercase letter (a-z).",
+        );
       } else {
         setPasswordError("Password does not meet the security criteria.");
       }
@@ -81,32 +85,35 @@ export default function SignUpPage() {
     }
 
     // Functionality placeholder: User will implement manual backend connection
-    const { data, error } = await signUp.email({
-        email: formData.email, // user email    
+    const { data, error } = await signUp.email(
+      {
+        email: formData.email, // user email
         password: formData.password, // user password -> min 8 characters by default
         name: formData.name, // user display name
         image: formData.image, // User image URL (optional)
-        callbackURL: "/dashboard" // A URL to redirect to after the user verifies their email (optional)
-    }, {
+        callbackURL: "/dashboard", // A URL to redirect to after the user verifies their email (optional)
+      },
+      {
         onRequest: (ctx) => {
-            setLoading(true);
+          setLoading(true);
         },
         onSuccess: (ctx) => {
-            setLoading(false);
-            router.push("/");
+          setLoading(false);
+          router.push("/");
         },
         onError: (ctx) => {
-            // display the error message
-            alert(ctx.error.message);
-            setLoading(false);  
+          // display the error message
+          alert(ctx.error.message);
+          setLoading(false);
         },
-    });
-    if(error) {
+      },
+    );
+    if (error) {
       setLoading(false);
-        alert(error.message);
+      alert(error.message);
     }
     console.log("Sign Up Response:", data);
-  }; 
+  };
 
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12 relative overflow-hidden bg-background">
@@ -125,7 +132,8 @@ export default function SignUpPage() {
               Create an Account
             </h1>
             <p className="text-xs sm:text-sm text-muted-foreground max-w-xs mx-auto">
-              Join BookNook to borrow editions, track your loans, and share books with the community.
+              Join BookNook to borrow editions, track your loans, and share
+              books with the community.
             </p>
           </div>
 
@@ -134,7 +142,9 @@ export default function SignUpPage() {
             <div className="mb-5 p-3.5 rounded-2xl bg-destructive/10 border border-destructive/20 text-destructive text-xs flex items-start gap-2.5 animate-in fade-in slide-in-from-top-1">
               <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
               <div className="flex-1">
-                <span className="font-semibold block">Password Validation Error</span>
+                <span className="font-semibold block">
+                  Password Validation Error
+                </span>
                 <span>{passwordError}</span>
               </div>
             </div>
@@ -260,14 +270,16 @@ export default function SignUpPage() {
                       hasUppercase
                         ? "text-emerald-700 dark:text-emerald-400 font-medium"
                         : isTouched
-                        ? "text-muted-foreground"
-                        : "text-muted-foreground"
+                          ? "text-muted-foreground"
+                          : "text-muted-foreground"
                     }`}
                   >
                     {hasUppercase ? (
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                     ) : (
-                      <span className="w-3.5 h-3.5 rounded-full border border-border flex items-center justify-center text-[9px]">•</span>
+                      <span className="w-3.5 h-3.5 rounded-full border border-border flex items-center justify-center text-[9px]">
+                        •
+                      </span>
                     )}
                     <span>Must have an uppercase letter (A-Z)</span>
                   </div>
@@ -278,14 +290,16 @@ export default function SignUpPage() {
                       hasLowercase
                         ? "text-emerald-700 dark:text-emerald-400 font-medium"
                         : isTouched
-                        ? "text-muted-foreground"
-                        : "text-muted-foreground"
+                          ? "text-muted-foreground"
+                          : "text-muted-foreground"
                     }`}
                   >
                     {hasLowercase ? (
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                     ) : (
-                      <span className="w-3.5 h-3.5 rounded-full border border-border flex items-center justify-center text-[9px]">•</span>
+                      <span className="w-3.5 h-3.5 rounded-full border border-border flex items-center justify-center text-[9px]">
+                        •
+                      </span>
                     )}
                     <span>Must have a lowercase letter (a-z)</span>
                   </div>
@@ -296,14 +310,16 @@ export default function SignUpPage() {
                       hasMinLength
                         ? "text-emerald-700 dark:text-emerald-400 font-medium"
                         : isTouched
-                        ? "text-muted-foreground"
-                        : "text-muted-foreground"
+                          ? "text-muted-foreground"
+                          : "text-muted-foreground"
                     }`}
                   >
                     {hasMinLength ? (
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                     ) : (
-                      <span className="w-3.5 h-3.5 rounded-full border border-border flex items-center justify-center text-[9px]">•</span>
+                      <span className="w-3.5 h-3.5 rounded-full border border-border flex items-center justify-center text-[9px]">
+                        •
+                      </span>
                     )}
                     <span>Length must be at least 6 characters</span>
                   </div>
@@ -359,18 +375,26 @@ export default function SignUpPage() {
                 className="mt-0.5 rounded accent-[#164e38]"
               />
               <span>
-                I agree to the BookNook Community Library Guidelines & Terms of Service.
+                I agree to the BookNook Community Library Guidelines & Terms of
+                Service.
               </span>
             </label>
 
             {/* Submit Button */}
             <Button
               type="submit"
-                disabled={loading}
+              disabled={loading}
               className="w-full h-11 bg-[#164e38] hover:bg-[#123e2d] text-white rounded-xl font-medium text-sm gap-2 shadow-md hover:shadow-lg transition cursor-pointer"
             >
-              <span> {loading ? "Signing up..." : "Register for BookNook"} </span>
-              <ArrowRight className="w-4 h-4" />
+              <div>
+                {" "}
+                {loading ? (
+                  <span>Signing up...</span>
+                ) : (
+                  <span>Register for BookNook</span>
+                )}{" "}
+              </div>
+              {!loading && <ArrowRight className="w-4 h-4" />}
             </Button>
           </form>
 

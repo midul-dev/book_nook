@@ -13,8 +13,12 @@ import {
   ShieldCheck,
   ArrowRight,
 } from "lucide-react";
+import { signIn } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 export default function SignInPage() {
+const router = useRouter();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -23,6 +27,7 @@ export default function SignInPage() {
 
   const [showPassword, setShowPassword] = useState(false);
   const [passwordError, setPasswordError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   // Password validation criteria
   const hasUppercase = /[A-Z]/.test(formData.password);
@@ -42,7 +47,7 @@ export default function SignInPage() {
     }
   };
 
-  const handleSignIn = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // Enforce Password Validation Criteria
@@ -60,9 +65,33 @@ export default function SignInPage() {
     }
 
     // Functionality placeholder: User will implement manual backend connection
-    console.log("Ready for manual auth implementation:", {
-      email: formData.email,
-    });
+    const { data, error } = await signIn.email(
+  {
+    email: formData.email,
+    password: formData.password,
+    callbackURL: "/",
+    rememberMe: formData.rememberMe,
+  },
+  {
+    onRequest: () => {
+      setLoading(true);
+    },
+
+    onSuccess: () => {
+      setLoading(false);
+      router.push("/dashboard");
+    },
+
+    onError: (ctx) => {
+      setLoading(false);
+      alert(ctx.error.message);
+    },
+  }
+);
+if (error) {
+  alert(error.message);
+}
+console.log("Sign-in response:", data);  
   };
 
   return (
@@ -191,8 +220,8 @@ export default function SignInPage() {
               type="submit"
               className="w-full h-11 bg-[#164e38] hover:bg-[#123e2d] text-white rounded-xl font-medium text-sm gap-2 shadow-md hover:shadow-lg transition cursor-pointer"
             >
-              <span>Sign In to Library</span>
-              <ArrowRight className="w-4 h-4" />
+              <span>{loading ? "Signing In..." : "Sign In to Library"}</span>
+              {(!loading) && (<ArrowRight className="w-4 h-4" />)}
             </Button>
           </form>
 
