@@ -82,7 +82,7 @@ export default function SignInPage() {
               Welcome Back
             </h1>
             <p className="text-xs sm:text-sm text-muted-foreground max-w-xs mx-auto">
-              Sign in to manage your active loans, reserve community books, and explore your personal shelf.
+              Sign in to manage and explore your personal shelf.
             </p>
           </div>
 

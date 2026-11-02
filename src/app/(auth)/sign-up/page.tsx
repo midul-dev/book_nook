@@ -18,8 +18,12 @@ import {
   Sparkles,
   Image as ImageIcon,
 } from "lucide-react";
+import { authClient, signUp } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 export default function SignUpPage() {
+    const router = useRouter();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -33,6 +37,7 @@ export default function SignUpPage() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [passwordError, setPasswordError] = useState<string | null>(null);
   const [isTouched, setIsTouched] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   // Validation criteria
   const hasUppercase = /[A-Z]/.test(formData.password);
@@ -53,10 +58,10 @@ export default function SignUpPage() {
     }
   };
 
-  const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Enforce Password Validation Criteria
+    // Enforce Password Validation Criteria     
     if (!isPasswordValid) {
       if (!hasMinLength) {
         setPasswordError("Password must be at least 6 characters long.");
@@ -76,12 +81,32 @@ export default function SignUpPage() {
     }
 
     // Functionality placeholder: User will implement manual backend connection
-    console.log("Ready for manual auth implementation:", {
-      name: formData.name,
-      email: formData.email,
-      image: formData.image,
+    const { data, error } = await signUp.email({
+        email: formData.email, // user email    
+        password: formData.password, // user password -> min 8 characters by default
+        name: formData.name, // user display name
+        image: formData.image, // User image URL (optional)
+        callbackURL: "/dashboard" // A URL to redirect to after the user verifies their email (optional)
+    }, {
+        onRequest: (ctx) => {
+            setLoading(true);
+        },
+        onSuccess: (ctx) => {
+            setLoading(false);
+            router.push("/");
+        },
+        onError: (ctx) => {
+            // display the error message
+            alert(ctx.error.message);
+            setLoading(false);  
+        },
     });
-  };
+    if(error) {
+      setLoading(false);
+        alert(error.message);
+    }
+    console.log("Sign Up Response:", data);
+  }; 
 
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12 relative overflow-hidden bg-background">
@@ -341,9 +366,10 @@ export default function SignUpPage() {
             {/* Submit Button */}
             <Button
               type="submit"
+                disabled={loading}
               className="w-full h-11 bg-[#164e38] hover:bg-[#123e2d] text-white rounded-xl font-medium text-sm gap-2 shadow-md hover:shadow-lg transition cursor-pointer"
             >
-              <span>Register for BookNook</span>
+              <span> {loading ? "Signing up..." : "Register for BookNook"} </span>
               <ArrowRight className="w-4 h-4" />
             </Button>
           </form>
