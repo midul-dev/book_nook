@@ -12,7 +12,7 @@ interface NewArrivalsSectionProps {
 }
 
 export async function NewArrivalsSection() {
-  const res = await fetch("http://localhost:5000/my-books");
+  const res = await fetch("http://localhost:5000/all-books");
   const displayedBooks: IBook[] = await res.json();
 
   // const displayedBooks = books.slice(0, 6); // Display only the first 6 books

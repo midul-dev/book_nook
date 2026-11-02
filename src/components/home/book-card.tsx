@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { IBook } from "@/types";
 import { ChevronRight, BookOpen } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 interface BookCardProps {
   book: IBook;
@@ -13,7 +14,8 @@ export function BookCard({ book }: BookCardProps) {
 
 
   return (
-    <article className="group flex flex-col h-full justify-between rounded-2xl bg-card p-3 sm:p-4 border border-border shadow-xs hover:shadow-xl hover:border-emerald-600/30 transition-all duration-300">
+    <Link href={`/all-books/${book._id}`} className="group">
+      <article className="group flex flex-col h-full justify-between rounded-2xl bg-card p-3 sm:p-4 border border-border shadow-xs hover:shadow-xl hover:border-emerald-600/30 transition-all duration-300">
       {/* 1. Equal-size picture container with guaranteed height & aspect ratio */}
       <div className=" sm:h-72 overflow-hidden rounded-xl bg-muted/40 shadow-xs">
         {book.image ? (
@@ -74,5 +76,6 @@ export function BookCard({ book }: BookCardProps) {
         </div>
       </div>
     </article>
+    </Link>
   );
 }
