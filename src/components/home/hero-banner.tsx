@@ -3,6 +3,7 @@
 import hero from "@/assets/hero.jpg";
 import Image from "next/image";
 import { ArrowRight, BookOpen, Sparkles, CheckCircle2 } from "lucide-react";
+import Link from "next/link";
 
 interface HeroBannerProps {
   onBrowseClick?: () => void;
@@ -44,21 +45,23 @@ export function HeroBanner({ onBrowseClick }: HeroBannerProps) {
 
               {/* Action Buttons */}
               <div className="pt-2 flex flex-wrap items-center gap-4">
-                <button
+                <Link
+                  href="#latest-books"
                   onClick={onBrowseClick}
                   className="group inline-flex items-center gap-2.5 px-8 py-3.5 rounded-2xl bg-[#c87000] hover:bg-[#b06200] active:scale-98 text-white font-medium text-sm sm:text-base shadow-md shadow-amber-950/20 hover:shadow-lg hover:shadow-amber-900/30 hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
                 >
                   <span>Learn more</span>
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                </button>
+                </Link>
 
-                <button
+                <Link
+                  href="/all-books"
                   onClick={onBrowseClick}
                   className="inline-flex items-center gap-2 px-5 py-3.5 rounded-2xl border border-stone-300/80 dark:border-stone-700 hover:bg-stone-100/60 dark:hover:bg-stone-800/60 text-stone-700 dark:text-stone-300 font-medium text-xs sm:text-sm transition-all cursor-pointer"
                 >
                   <BookOpen className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
-                  <span>Browse Catalog</span>
-                </button>
+                  <span>Browse All Books</span>
+                </Link>
               </div>
 
             

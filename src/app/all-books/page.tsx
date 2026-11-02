@@ -14,10 +14,10 @@ export default async function AllBooksPage() {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-border">
           <div className="space-y-2">
            
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground tracking-tight">
+            <h1 className="text-3xl sm:text-4xl font-bold text-foreground tracking-tight">
               All Books in the Library
             </h1>
-            <p className="text-muted-foreground text-sm sm:text-base max-w-2xl">
+            <p className="text-muted-foreground text-sm max-w-2xl">
               Browse through our entire community-driven literary inventory with
               real-time copy tracking and instant loans.
             </p>

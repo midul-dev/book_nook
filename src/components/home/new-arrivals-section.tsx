@@ -1,16 +1,9 @@
-import { BookCategory, IBook } from "@/types";
+import { IBook } from "@/types";
 import { BookCard } from "@/components/home/book-card";
 import { Button } from "@/components/ui/button";
 import { Plus, ArrowRight, Filter, BookOpen } from "lucide-react";
 import Link from "next/link";
 
-interface NewArrivalsSectionProps {
-  books: IBook[];
-  onViewDetails: (book: IBook) => void;
-  onOpenAddBook: () => void;
-  selectedCategory?: BookCategory | "All";
-  onSelectCategory?: (category: BookCategory | "All") => void;
-}
 
 export async function NewArrivalsSection() {
   const res = await fetch("http://localhost:5000/latest-books");
@@ -27,6 +20,9 @@ export async function NewArrivalsSection() {
           <h2 className="font-serif text-3xl sm:text-4xl font-bold text-foreground tracking-tight">
             New Arrivals on the Shelf
           </h2>
+          <p className="text-sm text-muted-foreground">
+            Freshly cataloged additions contributed by our community readers.
+          </p>
         </div>
 
         {/* Action Controls (Add Book & Filter) */}
@@ -41,15 +37,8 @@ export async function NewArrivalsSection() {
         </div>
       </div>
 
-      {/* Category Quick Filter Pills */}
-      <div className="flex items-center gap-2 overflow-x-auto py-6 scrollbar-none">
-        <span className="text-xs font-mono text-muted-foreground flex items-center gap-1 mr-1">
-          <Filter className="w-3.5 h-3.5" /> Filter:
-        </span>
-      </div>
-
       {/* Book Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+      <div id="latest-books" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
         {displayedBooks.map((book) => (
           <BookCard key={book._id} book={book} />
         ))}
