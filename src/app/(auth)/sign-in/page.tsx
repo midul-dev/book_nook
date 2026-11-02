@@ -79,7 +79,7 @@ const router = useRouter();
 
     onSuccess: () => {
       setLoading(false);
-      router.push("/dashboard");
+      router.push("/");
     },
 
     onError: (ctx) => {

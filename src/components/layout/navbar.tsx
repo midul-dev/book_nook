@@ -3,9 +3,22 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BookOpen, Moon, Sun, ChevronDown, Menu, X, PlusCircle, Bookmark } from "lucide-react";
+import {
+  BookOpen,
+  Moon,
+  Sun,
+  ChevronDown,
+  Menu,
+  X,
+  PlusCircle,
+  Bookmark,
+  User,
+  LogOut,
+} from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { signOut, useSession } from "@/lib/auth-client";
+import { Skeleton } from "../ui/skeleton";
 
 interface NavbarProps {
   borrowCount?: number;
@@ -14,10 +27,7 @@ interface NavbarProps {
   setActiveNav?: (nav: string) => void;
 }
 
-export function Navbar({
-  borrowCount = 2,
-  onOpenAddBook,
-}: NavbarProps) {
+export function Navbar({ borrowCount = 2, onOpenAddBook }: NavbarProps) {
   const pathname = usePathname();
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -25,7 +35,9 @@ export function Navbar({
 
   useEffect(() => {
     const isDark = document.documentElement.classList.contains("dark");
-    setIsDarkMode(isDark);
+    requestAnimationFrame(() => {
+      setIsDarkMode(isDark);
+    });
   }, []);
 
   const toggleDarkMode = () => {
@@ -36,6 +48,16 @@ export function Navbar({
     } else {
       document.documentElement.classList.remove("dark");
     }
+  };
+
+  const { data: session, isPending, error } = useSession();
+  const user = session?.user;
+
+  const profilePicture = user?.image || user?.name.charAt(0);
+
+  const handleSignOut = async () => {
+    await signOut();
+    setIsProfileOpen(false);
   };
 
   const navItems = [
@@ -141,57 +163,88 @@ export function Navbar({
             )}
           </button>
 
-          {/* User Profile Pill */}
-          <div className="relative">
-            <button
-              onClick={() => setIsProfileOpen(!isProfileOpen)}
-              className="flex items-center gap-2 pl-1.5 pr-2.5 py-1 rounded-full border border-border bg-card hover:bg-muted/80 transition-all text-xs font-medium cursor-pointer"
-            >
-              <div className="h-6 w-6 rounded-full bg-[#1b2533] text-white flex items-center justify-center text-[10px] font-bold ring-1 ring-border">
-                AR
-              </div>
-              <span className="hidden sm:inline-block text-foreground font-medium text-xs">
-                Ariana
-              </span>
-              <ChevronDown className="h-3 w-3 text-muted-foreground" />
-            </button>
+          {/* Sign In & Sign Up Buttons & User Profile Pill */}
+          {isPending ? (
+            <div className="relative">
+              <div className="flex items-center gap-2 pl-1.5 pr-2.5 py-1 rounded-full border border-border bg-card">
+                {/* Avatar Circle Skeleton */}
+                <Skeleton className="h-6 w-6 rounded-full shrink-0" />
 
-            {/* Profile Dropdown */}
-            {isProfileOpen && (
-              <div className="absolute right-0 mt-2 w-52 rounded-xl bg-card border border-border shadow-xl p-2 text-xs z-50 animate-in fade-in slide-in-from-top-2">
-                <div className="px-3 py-2 border-b border-border/80 mb-1">
-                  <p className="font-semibold text-foreground">Ariana Vance</p>
-                  <p className="text-[11px] text-muted-foreground truncate">
-                    ariana@booknook.org
-                  </p>
-                </div>
-                <div className="flex flex-col gap-0.5">
-                  <Link
-                    href="/my-borrows"
-                    onClick={() => setIsProfileOpen(false)}
-                    className="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-muted text-left text-foreground transition"
-                  >
-                    <span className="flex items-center gap-2">
-                      <Bookmark className="w-3.5 h-3.5 text-amber-500" />
-                      Active Borrows
-                    </span>
-                    <Badge variant="secondary" className="h-4 px-1.5 text-[10px]">
-                      {borrowCount}
-                    </Badge>
-                  </Link>
+                {/* User Name Text Skeleton (Hidden on mobile just like the real text) */}
+                <Skeleton className="hidden sm:block h-3 w-20 rounded-md" />
 
-                  <Link
-                    href="/add-books"
-                    onClick={() => setIsProfileOpen(false)}
-                    className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-muted text-left text-foreground transition"
-                  >
-                    <PlusCircle className="w-3.5 h-3.5 text-emerald-600" />
-                    Contribute a Book
-                  </Link>
-                </div>
+                {/* Chevron Icon Skeleton */}
+                <Skeleton className="h-3 w-3 rounded-sm shrink-0" />
               </div>
-            )}
-          </div>
+            </div>
+          ) : user ? (
+            <div className="relative">
+              <button
+                onClick={() => setIsProfileOpen(!isProfileOpen)}
+                className="flex items-center gap-2 pl-1.5 pr-2.5 py-1 rounded-full border border-border bg-card hover:bg-muted/80 transition-all text-xs font-medium cursor-pointer"
+              >
+                <div className="h-6 w-6 rounded-full bg-[#1b2533] text-white flex items-center justify-center text-[10px] font-bold ring-1 ring-border">
+                  {profilePicture}
+                </div>
+                <span className="hidden sm:inline-block text-foreground font-medium text-xs">
+                  {user.name}
+                </span>
+                <ChevronDown className="h-3 w-3 text-muted-foreground" />
+              </button>
+
+              {/* Profile Dropdown */}
+              {isProfileOpen && (
+                <div className="absolute right-0 mt-2 w-52 rounded-xl bg-card border border-border shadow-xl p-2 text-xs z-50 animate-in fade-in slide-in-from-top-2">
+                  <div className="px-3 py-2 border-b border-border/80 mb-1">
+                    <p className="font-semibold text-foreground">{user.name}</p>
+                    <p className="text-[11px] text-muted-foreground truncate">
+                      {user.email}
+                    </p>
+                  </div>
+                  <div className="flex flex-col gap-0.5">
+                    <Link
+                      href="/my-borrows"
+                      onClick={() => setIsProfileOpen(false)}
+                      className="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-muted text-left text-foreground transition"
+                    >
+                      <span className="flex items-center gap-2">
+                        <User className="w-3.5 h-3.5 text-amber-500" />
+                        Profile
+                      </span>
+                    </Link>
+
+                    <button
+                      onClick={handleSignOut}
+                      className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-muted text-left text-foreground transition cursor-pointer"
+                    >
+                      <LogOut className="w-3.5 h-3.5 text-emerald-600 " />
+                      Signout
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="flex items-center gap-1.5">
+              <Link href="/sign-in">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="h-8 px-2.5 text-xs font-medium border-border hover:bg-muted text-foreground cursor-pointer"
+                >
+                  Sign In
+                </Button>
+              </Link>
+              <Link href="/sign-up">
+                <Button
+                  size="sm"
+                  className="h-8 px-3 text-xs font-medium bg-[#164e38] hover:bg-[#123e2d] text-white rounded-lg cursor-pointer"
+                >
+                  Sign Up
+                </Button>
+              </Link>
+            </div>
+          )}
 
           {/* Mobile Menu Hamburger */}
           <button
@@ -199,7 +252,11 @@ export function Navbar({
             aria-label="Toggle menu"
             className="md:hidden h-8 w-8 rounded-lg flex items-center justify-center border border-border text-foreground hover:bg-muted"
           >
-            {isMobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+            {isMobileMenuOpen ? (
+              <X className="h-4 w-4" />
+            ) : (
+              <Menu className="h-4 w-4" />
+            )}
           </button>
         </div>
       </div>

@@ -21,6 +21,13 @@ export interface ICategoryInfo {
 }
 
 
+export interface IUser {
+  _id: string;
+  name: string;
+  email: string;
+  image: string;
+}
+
 
 export interface HeroSlide {
   id: string;
