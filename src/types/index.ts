@@ -1,13 +1,33 @@
 export type BookCategory = "Science" | "History" | "Kids" | "Others" | "Fiction";
 
+export interface Book {
+  id: string;
+  _id?: string;
+  title: string;
+  author: string;
+  category: BookCategory;
+  coverGradient?: string;
+  coverThemeColor?: string;
+  motif?: string;
+  totalCopies?: number;
+  availableCopies?: number;
+  copies?: string | number;
+  addedDate?: string;
+  description: string;
+  isbn?: string;
+  pages?: number;
+  rating?: number;
+  image?: string;
+}
+
 export interface IBook {
-  _id: string,
-  title: string,
-  author: string,
-  category: BookCategory,
-  copies: string,
-  image: string,
-  description: string
+  _id: string;
+  title: string;
+  author: string;
+  category: BookCategory;
+  copies: string;
+  image: string;
+  description: string;
 }
 
 export interface CategoryInfo {
