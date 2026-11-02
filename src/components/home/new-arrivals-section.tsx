@@ -12,15 +12,14 @@ interface NewArrivalsSectionProps {
 }
 
 export async function NewArrivalsSection() {
-  const res = await fetch("http://localhost:5000/all-books");
+  const res = await fetch("http://localhost:5000/latest-books");
   const displayedBooks: IBook[] = await res.json();
 
-  // const displayedBooks = books.slice(0, 6); // Display only the first 6 books
-
-  
-
   return (
-    <section id="shelf" className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
+    <section
+      id="shelf"
+      className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16"
+    >
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-border/80">
         <div className="space-y-2 max-w-2xl">
@@ -46,7 +45,6 @@ export async function NewArrivalsSection() {
         <span className="text-xs font-mono text-muted-foreground flex items-center gap-1 mr-1">
           <Filter className="w-3.5 h-3.5" /> Filter:
         </span>
-      
       </div>
 
       {/* Book Grid */}
@@ -59,16 +57,18 @@ export async function NewArrivalsSection() {
       {displayedBooks.length === 0 && (
         <div className="text-center py-16 bg-muted/30 rounded-2xl border border-dashed border-border">
           <BookOpen className="w-10 h-10 text-muted-foreground mx-auto mb-2 opacity-50" />
-          <p className="text-base font-medium text-foreground">No books found in this category</p>
-          <p className="text-xs text-muted-foreground mt-1">Try selecting another filter or donate a new book.</p>
+          <p className="text-base font-medium text-foreground">
+            No books found in this category
+          </p>
+          <p className="text-xs text-muted-foreground mt-1">
+            Try selecting another filter or donate a new book.
+          </p>
         </div>
       )}
 
       {/* Centered CTA */}
       <div className="flex justify-center pt-12">
-        <button
-          className="inline-flex items-center gap-2 px-8 py-3 rounded-xl bg-[#164e38] hover:bg-[#123e2d] active:scale-98 text-white text-sm md:text-base font-medium shadow-md hover:shadow-lg transition-all cursor-pointer"
-        >
+        <button className="inline-flex items-center gap-2 px-8 py-3 rounded-xl bg-[#164e38] hover:bg-[#123e2d] active:scale-98 text-white text-sm md:text-base font-medium shadow-md hover:shadow-lg transition-all cursor-pointer">
           <span>See All Books</span>
           <ArrowRight className="w-4 h-4" />
         </button>

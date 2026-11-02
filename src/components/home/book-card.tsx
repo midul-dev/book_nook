@@ -12,6 +12,15 @@ interface BookCardProps {
 
 export function BookCard({ book }: BookCardProps) {
 
+  // Date formatting function ba direct variable
+const catalogedDate = book.createdAt 
+  ? new Date(book.createdAt).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long', // 'short' dile Nov, 'long' dile November dekhabe
+      day: 'numeric'
+    })
+  : "Recently Added"; // Jodi kono boi er date na thake tar jonno fallback
+
 
   return (
     <Link href={`/all-books/${book._id}`} className="group">
@@ -63,6 +72,9 @@ export function BookCard({ book }: BookCardProps) {
               className="text-xs text-muted-foreground mt-0.5 truncate h-4"
             >
               by {book.author}
+            </p>
+            <p className="text-xs text-muted-foreground mt-3">
+              {catalogedDate}
             </p>
           </div>
         </div>

@@ -1,24 +1,5 @@
 export type BookCategory = "Science" | "History" | "Kids" | "Others" | "Fiction";
 
-export interface Book {
-  id: string;
-  _id?: string;
-  title: string;
-  author: string;
-  category: BookCategory;
-  coverGradient?: string;
-  coverThemeColor?: string;
-  motif?: string;
-  totalCopies?: number;
-  availableCopies?: number;
-  copies?: string | number;
-  addedDate?: string;
-  description: string;
-  isbn?: string;
-  pages?: number;
-  rating?: number;
-  image?: string;
-}
 
 export interface IBook {
   _id: string;
@@ -28,9 +9,10 @@ export interface IBook {
   copies: string;
   image: string;
   description: string;
+  createdAt: string;
 }
 
-export interface CategoryInfo {
+export interface ICategoryInfo {
   id: string;
   name: BookCategory;
   subtitle: string;
@@ -38,18 +20,7 @@ export interface CategoryInfo {
   iconName: "book" | "atom" | "history" | "sparkles" | "palette";
 }
 
-export interface ReaderReview {
-  id: string;
-  quote: string;
-  rating: number;
-  badgeText: string;
-  reviewer: {
-    name: string;
-    title: string;
-    avatarInitials: string;
-    avatarColor: string;
-  };
-}
+
 
 export interface HeroSlide {
   id: string;
