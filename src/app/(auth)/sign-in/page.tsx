@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { signIn } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function SignInPage() {
 const router = useRouter();
@@ -79,17 +80,18 @@ const router = useRouter();
 
     onSuccess: () => {
       setLoading(false);
+      toast.success("Successfully signed in! Redirecting to your library shelf...")
       router.push("/");
     },
 
     onError: (ctx) => {
       setLoading(false);
-      alert(ctx.error.message);
+      toast.error(ctx.error.message);
     },
   }
 );
 if (error) {
-  alert(error.message);
+  toast.error(error.message);
 }
 console.log("Sign-in response:", data);  
   };

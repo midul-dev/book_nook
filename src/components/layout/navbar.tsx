@@ -19,6 +19,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { signOut, useSession } from "@/lib/auth-client";
 import { Skeleton } from "../ui/skeleton";
+import { toast } from "sonner";
 
 interface NavbarProps {
   borrowCount?: number;
@@ -57,6 +58,7 @@ export function Navbar({ borrowCount = 2, onOpenAddBook }: NavbarProps) {
 
   const handleSignOut = async () => {
     await signOut();
+    toast.success("Successfully signed out! Redirecting to homepage...");
     setIsProfileOpen(false);
   };
 
@@ -203,7 +205,7 @@ export function Navbar({ borrowCount = 2, onOpenAddBook }: NavbarProps) {
                   </div>
                   <div className="flex flex-col gap-0.5">
                     <Link
-                      href="/my-borrows"
+                      href="/user-profile"
                       onClick={() => setIsProfileOpen(false)}
                       className="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-muted text-left text-foreground transition"
                     >

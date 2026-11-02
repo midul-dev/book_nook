@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { authClient, signUp } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -99,20 +100,21 @@ export default function SignUpPage() {
         },
         onSuccess: (ctx) => {
           setLoading(false);
+          toast.success("Successfully signed up! Redirecting to your library shelf...")
           router.push("/");
         },
         onError: (ctx) => {
           // display the error message
-          alert(ctx.error.message);
+          toast.error(ctx.error.message);
           setLoading(false);
         },
       },
     );
     if (error) {
       setLoading(false);
-      alert(error.message);
+      toast.error(error.message);
     }
-    console.log("Sign Up Response:", data);
+
   };
 
   return (
