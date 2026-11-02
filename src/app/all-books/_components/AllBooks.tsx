@@ -1,7 +1,8 @@
+'use client';
 import { BookCard } from '@/components/home/book-card';
 import { Input } from '@/components/ui/input';
-import { BookCategory, BookCategory, IBook } from '@/types';
-import { BookOpen, Search } from 'lucide-react';
+import { BookCategory, IBook } from '@/types';
+import { BookOpen, Filter, Search } from 'lucide-react';
 import React, { useState } from 'react';
 
 const AllBooks = ({books} : {books:IBook[]}) => {
@@ -24,25 +25,6 @@ const AllBooks = ({books} : {books:IBook[]}) => {
     return matchesCategory && matchesSearch;
   });
 
-  const handleBorrow = (bookId: string) => {
-    setBooks((prev) =>
-      prev.map((b) => (b.id === bookId && b.availableCopies > 0 ? { ...b, availableCopies: b.availableCopies - 1 } : b))
-    );
-    if (!borrowedBookIds.includes(bookId)) setBorrowedBookIds((prev) => [...prev, bookId]);
-    setSelectedBook((prev) => (prev && prev.id === bookId ? { ...prev, availableCopies: prev.availableCopies - 1 } : prev));
-  };
-
-  const handleReturn = (bookId: string) => {
-    setBooks((prev) =>
-      prev.map((b) => (b.id === bookId && b.availableCopies < b.totalCopies ? { ...b, availableCopies: b.availableCopies + 1 } : b))
-    );
-    setBorrowedBookIds((prev) => prev.filter((id) => id !== bookId));
-    setSelectedBook((prev) => (prev && prev.id === bookId ? { ...prev, availableCopies: prev.availableCopies + 1 } : prev));
-  };
-
-  const handleAddNewBook = (newBook: Book) => {
-    setBooks((prev) => [newBook, ...prev]);
-  };
     return (
         <div>
               {/* Filter & Search Bar */}
