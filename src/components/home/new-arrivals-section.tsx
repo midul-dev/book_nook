@@ -2,6 +2,7 @@ import { BookCategory, IBook } from "@/types";
 import { BookCard } from "@/components/home/book-card";
 import { Button } from "@/components/ui/button";
 import { Plus, ArrowRight, Filter, BookOpen } from "lucide-react";
+import Link from "next/link";
 
 interface NewArrivalsSectionProps {
   books: IBook[];
@@ -68,10 +69,10 @@ export async function NewArrivalsSection() {
 
       {/* Centered CTA */}
       <div className="flex justify-center pt-12">
-        <button className="inline-flex items-center gap-2 px-8 py-3 rounded-xl bg-[#164e38] hover:bg-[#123e2d] active:scale-98 text-white text-sm md:text-base font-medium shadow-md hover:shadow-lg transition-all cursor-pointer">
+        <Link href="/all-books" className="inline-flex items-center gap-2 px-8 py-3 rounded-xl bg-[#164e38] hover:bg-[#123e2d] active:scale-98 text-white text-sm md:text-base font-medium shadow-md hover:shadow-lg transition-all cursor-pointer">
           <span>See All Books</span>
           <ArrowRight className="w-4 h-4" />
-        </button>
+        </Link>
       </div>
     </section>
   );

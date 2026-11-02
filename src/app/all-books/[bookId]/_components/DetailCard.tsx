@@ -6,6 +6,14 @@ import Link from 'next/link';
 
 
 const DetailCard = ({ book, totalCopies }: { book: IBook; totalCopies: number }) => {
+    const catalogedDate = book.createdAt 
+  ? new Date(book.createdAt).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long', 
+      day: 'numeric'
+    })
+  : "Recently Added"; 
+
     return (
          <section className="overflow-hidden rounded-3xl border border-stone-200/80 bg-white shadow-sm">
 
@@ -46,6 +54,8 @@ const DetailCard = ({ book, totalCopies }: { book: IBook; totalCopies: number })
                         {book.author}
                       </p>
 
+                      
+
                     </div>
                   )}
 
@@ -82,8 +92,12 @@ const DetailCard = ({ book, totalCopies }: { book: IBook; totalCopies: number })
                 </span>
               </p>
 
+              <p className="text-xs text-stone-400 mt-3">
+                        {catalogedDate}
+                      </p>
+
               {/* Divider */}
-              <div className="my-7 h-px bg-stone-200" />
+              <div className="mb-7 mt-2 h-px bg-stone-200" />
 
               {/* Description */}
               <div className="mb-8">
