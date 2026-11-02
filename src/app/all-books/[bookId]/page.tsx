@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Check, BookOpen } from "lucide-react";
 import { IBook } from "@/types";
+import { Button } from "@/components/ui/button";
 
 export default async function BookDetailPage({
   params,
@@ -26,8 +27,8 @@ export default async function BookDetailPage({
   if (!book) notFound();
 
   const totalCopies = Number(book.copies) || 0;
-  const availableCopies = Math.max(0, totalCopies - 3); // Demo calculation
-  const isBorrowedByMe = true; // Demo state
+//   const availableCopies = Math.max(0, totalCopies - 3); // Demo calculation
+//   const isBorrowedByMe = true; // Demo state
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -80,39 +81,48 @@ export default async function BookDetailPage({
             </p>
 
             {/* Description */}
-            <div className="prose prose-blue text-gray-600 mb-8 max-w-none">
+            <div className=" text-slate-300 mb-8 max-w-none">
               <p className="leading-relaxed">{book.description}</p>
             </div>
 
             {/* Statistics Grid */}
-            <div className="grid grid-cols-2 gap-6 mb-8 py-6 border-y border-gray-100">
-              <div>
-                <p className="text-sm font-medium text-gray-500 mb-1">Total Copies</p>
-                <p className="text-2xl font-bold text-gray-900">{totalCopies}</p>
+            
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+              <div className="border border-gray-200 rounded-2xl p-5">
+                <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">
+                  Added to Library By
+                </h3>
+                <p className="font-semibold text-gray-900 text-sm">mm</p>
+                <p className="text-gray-500 text-xs">mg</p>
               </div>
-              <div>
-                <p className="text-sm font-medium text-gray-500 mb-1">Available Now</p>
-                <p className="text-2xl font-bold text-green-600">{availableCopies}</p>
+              <div className=" border-gray-200 rounded-2xl p-5">
+                <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">
+                  Inventory Status (Sync)
+                </h3>
+                <p className="font-semibold text-gray-900 text-sm">
+                  {/* {availableCopies} Available / {totalCopies} Total */}
+                </p>
+                <p className="text-gray-500 text-xs">Cataloged on null</p>
               </div>
             </div>
 
             {/* Actions */}
-            <div className="flex flex-col sm:flex-row items-center gap-4 mt-auto">
-              {isBorrowedByMe ? (
-                <div className="flex items-center justify-center w-full sm:w-auto px-6 py-3.5 bg-green-50 text-green-700 rounded-xl font-semibold border border-green-200">
-                  <Check className="w-5 h-5 mr-2" />
-                  Currently Borrowed
-                </div>
-              ) : (
-                <button
-                  disabled={availableCopies === 0}
-                  className="w-full sm:w-auto px-8 py-3.5 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-xl font-semibold shadow-sm transition-all focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                >
-                  {availableCopies > 0 ? "Borrow Book" : "Out of Stock"}
-                </button>
-              )}
-            </div>
-            
+            <Button
+  className="w-full sm:w-auto px-8 py-3.5 bg-green-600 hover:bg-green-700 text-white rounded-xl font-semibold shadow-sm"
+>
+  Borrow Book
+</Button>
+
+<div className="bg-red-500 p-10">
+  <h1 className="text-white text-4xl font-bold">
+    Tailwind Color Test
+  </h1>
+
+  <p className="text-blue-500">
+    This should be blue.
+  </p>
+</div>
           </div>
         </div>
       </div>
