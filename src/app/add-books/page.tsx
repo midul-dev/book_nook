@@ -1,9 +1,10 @@
 "use client";
 import React, { useState } from "react";
-import {BookCategory } from "@/types";
+import { BookCategory } from "@/types";
 import { PlusCircle, Sparkles, CheckCircle2, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 export default function AddBooksPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -19,6 +20,7 @@ export default function AddBooksPage() {
       category: BookCategory;
       copies: string;
       description: string;
+      image: string;
     };
 
     try {
@@ -33,13 +35,18 @@ export default function AddBooksPage() {
         setIsSubmitted(true);
         window.scrollTo({ top: 0, behavior: "smooth" });
       } else {
-        alert("Failed to submit book. Please try again.");
+        toast.error("Failed to submit book. Please try again.");
       }
     } catch (error) {
       console.error("Error submitting book:", error);
-      alert("An error occurred while submitting the book. Please try again.");
+      toast.error(
+        "An error occurred while submitting the book. Please try again.",
+      );
     } finally {
       setLoading(false);
+      toast.success(
+        "Book added successfully! It is now available for borrowing.",
+      );
     }
   };
 
@@ -61,8 +68,12 @@ export default function AddBooksPage() {
                 Book Cataloged Successfully!
               </h3>
               <p className="text-sm text-emerald-800/80 dark:text-emerald-300/80 max-w-md mx-auto">
-                Your edition has been safely indexed into MongoDB with live copy
-                tracking.
+                Your book has been added to the community library. Readers can
+                now discover and borrow it. Thank you for contributing to our
+                shared literary space!
+              </p>
+              <p className="text-sm text-emerald-800/80 dark:text-emerald-300/80 max-w-md mx-auto">
+                You can add another book or view it in the All Books section.
               </p>
               <div className="pt-4 flex items-center justify-center gap-3">
                 <Button
@@ -159,7 +170,7 @@ export default function AddBooksPage() {
                     Image Url / Cover Art *
                   </label>
                   <input
-                    type="text"
+                    type="url"
                     required
                     name="image"
                     placeholder="e.g. https://example.com/cover.jpg"

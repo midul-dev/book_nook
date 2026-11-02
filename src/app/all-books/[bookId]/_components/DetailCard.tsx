@@ -1,11 +1,21 @@
 import { Button } from '@/components/ui/button';
+import { auth } from '@/lib/auth';
 import { IBook } from '@/types';
 import { ArrowUpRight, BookOpen, Package, UserRound } from 'lucide-react';
+import { headers } from 'next/headers';
 import Image from 'next/image';
 import Link from 'next/link';
 
 
-const DetailCard = ({ book, totalCopies }: { book: IBook; totalCopies: number }) => {
+const DetailCard =async ({ book, totalCopies }: { book: IBook; totalCopies: number }) => {
+
+const session = await auth.api.getSession({
+    headers: await headers() // you need to pass the headers object.
+})
+
+const user = session?.user;
+
+
     const catalogedDate = book.createdAt 
   ? new Date(book.createdAt).toLocaleDateString('en-US', {
       year: 'numeric',
@@ -130,11 +140,11 @@ const DetailCard = ({ book, totalCopies }: { book: IBook; totalCopies: number })
   </p>
 
   <p className="text-sm font-semibold text-stone-800">
-    {book.addedBy?.name || "Unknown User"}
+    {user?.name || "Unknown user"}
   </p>
 
   <p className="mt-1 text-xs text-stone-500">
-    {book.addedBy?.email || "Email not available"}
+    {user?.email || "Unknown email"}
   </p>
 
 </div>
