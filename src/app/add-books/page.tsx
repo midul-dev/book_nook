@@ -11,12 +11,12 @@ export default function AddBooksPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const {data: session} = useSession()
-  const user = session?.user
-
+  const { data: session } = useSession();
+  const user = session?.user;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (loading) return;
     setLoading(true);
     const formData = new FormData(e.currentTarget);
     const newBook = Object.fromEntries(formData.entries()) as {
@@ -29,7 +29,7 @@ export default function AddBooksPage() {
       userName: string;
       userEmail: string;
     };
-    console.log(newBook)
+    console.log(newBook);
 
     try {
       const res = await fetch("http://localhost:5000/add-books", {
@@ -39,11 +39,13 @@ export default function AddBooksPage() {
         },
         body: JSON.stringify(newBook),
       });
+      const data = await res.json();
       if (res.ok) {
+        toast.success(data.message);
         setIsSubmitted(true);
         window.scrollTo({ top: 0, behavior: "smooth" });
       } else {
-        toast.error("Failed to submit book. Please try again.");
+        toast.error(data.error);
       }
     } catch (error) {
       console.error("Error submitting book:", error);
@@ -52,11 +54,7 @@ export default function AddBooksPage() {
       );
     } finally {
       setLoading(false);
-      toast.success(
-        "Book added successfully! It is now available for borrowing.",
-      );
     }
-    
   };
 
   return (
