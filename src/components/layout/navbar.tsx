@@ -20,6 +20,7 @@ import { Button } from "@/components/ui/button";
 import { signOut, useSession } from "@/lib/auth-client";
 import { Skeleton } from "../ui/skeleton";
 import { toast } from "sonner";
+import Image from "next/image";
 
 interface NavbarProps {
   borrowCount?: number;
@@ -53,8 +54,6 @@ export function Navbar({ borrowCount = 2, onOpenAddBook }: NavbarProps) {
 
   const { data: session, isPending, error } = useSession();
   const user = session?.user;
-
-  const profilePicture = user?.image || user?.name.charAt(0);
 
   const handleSignOut = async () => {
     await signOut();
@@ -128,30 +127,7 @@ export function Navbar({ borrowCount = 2, onOpenAddBook }: NavbarProps) {
 
         {/* Right Tools (Theme Toggle, Profile, Quick Actions) */}
         <div className="flex items-center gap-2.5">
-          {/* Donate / Add Book Button */}
-          {onOpenAddBook ? (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={onOpenAddBook}
-              className="hidden lg:inline-flex gap-1.5 border-dashed border-emerald-600/40 text-emerald-800 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 text-xs font-medium h-8"
-            >
-              <PlusCircle className="w-3.5 h-3.5" />
-              <span>Donate Book</span>
-            </Button>
-          ) : (
-            <Link href="/add-books" className="hidden lg:inline-flex">
-              <Button
-                variant="outline"
-                size="sm"
-                className="gap-1.5 border-dashed border-emerald-600/40 text-emerald-800 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 text-xs font-medium h-8"
-              >
-                <PlusCircle className="w-3.5 h-3.5" />
-                <span>Donate Book</span>
-              </Button>
-            </Link>
-          )}
-
+        
           {/* Dark Mode Switcher */}
           <button
             onClick={toggleDarkMode}
@@ -186,7 +162,17 @@ export function Navbar({ borrowCount = 2, onOpenAddBook }: NavbarProps) {
                 className="flex items-center gap-2 pl-1.5 pr-2.5 py-1 rounded-full border border-border bg-card hover:bg-muted/80 transition-all text-xs font-medium cursor-pointer"
               >
                 <div className="h-6 w-6 rounded-full bg-[#1b2533] text-white flex items-center justify-center text-[10px] font-bold ring-1 ring-border">
-                  {profilePicture}
+                  {user?.image ? (
+                    <Image
+                      src={user.image}
+                      alt={user.name || "Profile"}
+                      height={6}
+                      width={6}
+                      className="h-full w-full object-cover rounded-full"
+                    />
+                  ) : (
+                    <span>{user?.name?.charAt(0)?.toUpperCase() || "U"}</span>
+                  )}
                 </div>
                 <span className="hidden sm:inline-block text-foreground font-medium text-xs">
                   {user.name}

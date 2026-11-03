@@ -93,8 +93,13 @@ const router = useRouter();
 if (error) {
   toast.error(error.message);
 }
-console.log("Sign-in response:", data);  
   };
+
+  const handleGoogleSignIn =async ()=>{
+     const data = await signIn.social({
+    provider: "google",
+  });
+  }
 
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12 relative overflow-hidden bg-background">
@@ -242,6 +247,7 @@ console.log("Sign-in response:", data);
           {/* Google Login Button */}
           <button
             type="button"
+            onClick={handleGoogleSignIn}
             className="w-full h-11 rounded-xl border border-border bg-background hover:bg-muted text-foreground font-medium text-sm flex items-center justify-center gap-3 shadow-xs hover:shadow-md transition active:scale-[0.99] cursor-pointer"
           >
             <svg className="w-4 h-4" viewBox="0 0 24 24">
