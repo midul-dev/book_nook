@@ -92,12 +92,12 @@ export default function AddBooksPage() {
                 >
                   <span>Add Another Book</span> <PlusCircle />
                 </Button>
-                <Link href="/all-books">
+                <Link href="/my-books">
                   <Button
                     size="sm"
                     className="bg-[#164e38] hover:bg-[#123e2d] text-white"
                   >
-                    View in All Books →
+                    View in My Books →
                   </Button>
                 </Link>
               </div>

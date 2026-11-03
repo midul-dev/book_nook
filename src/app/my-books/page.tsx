@@ -3,6 +3,9 @@ import Link from "next/link";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MyBookRow, IMyBookItem } from "./_components/MyBookRow";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
+import { IBook } from "@/types";
 
 // Static mock data modeled exactly after the reference design
 const staticMyBooks: IMyBookItem[] = [
@@ -48,7 +51,18 @@ const staticMyBooks: IMyBookItem[] = [
   },
 ];
 
-export default function MyBooksPage() {
+export default async function MyBooksPage() {
+
+    const session = await auth.api.getSession({
+    headers: await headers() // you need to pass the headers object.
+})
+const userEmail = session?.user?.email
+
+
+    const res = await fetch(`http://localhost:5000/my-books?email=${userEmail}`)
+    const myBooks: IBook[] = await res.json()
+
+
   return (
     <div className="min-h-screen bg-background text-foreground transition-colors">
       <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
@@ -56,7 +70,7 @@ export default function MyBooksPage() {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-border">
           <div className="space-y-2">
             <h1 className="text-3xl sm:text-4xl font-bold text-foreground tracking-tight">
-              My Books
+              My Contributed Books
             </h1>
             <p className="text-muted-foreground text-sm max-w-2xl">
               Manage your contributed volumes, track available copies, and update library catalog entries.
@@ -89,8 +103,8 @@ export default function MyBooksPage() {
 
                 {/* Book Rows */}
                 <div className="divide-y divide-border/60">
-                  {staticMyBooks.map((book) => (
-                    <MyBookRow key={book.id} book={book} />
+                  {myBooks.map((book) => (
+                    <MyBookRow key={book._id} book={book} />
                   ))}
                 </div>
               </div>

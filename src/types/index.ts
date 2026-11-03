@@ -9,6 +9,8 @@ export interface IBook {
   copies: string;
   image: string;
   description: string;
+  userName?: string,
+  userEmail?: string,
   createdAt: string;
 }
 
