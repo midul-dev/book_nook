@@ -1,67 +1,22 @@
 import React from "react";
 import Link from "next/link";
-import { Plus } from "lucide-react";
+import { BookOpen, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { MyBookRow, IMyBookItem } from "./_components/MyBookRow";
+import { MyBookRow } from "./_components/MyBookRow";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { IBook } from "@/types";
 
-// Static mock data modeled exactly after the reference design
-const staticMyBooks: IMyBookItem[] = [
-  {
-    id: "my-book-1",
-    title: "The Glass Botanist",
-    author: "Clara Vance",
-    category: "Fiction",
-    copies: "3 / 5",
-    description: "Set in a Victorian conservatory on the Scottish coast, a...",
-    initials: "FI",
-    coverGradient: "from-[#143d2b] via-[#0d2a1d] to-[#071911]",
-  },
-  {
-    id: "my-book-2",
-    title: "Quantum Tides & Cosmic Clocks",
-    author: "Dr. Rafiqul Islam",
-    category: "Science",
-    copies: "2 / 4",
-    description: "An accessible guide to gravitational waves, atomic...",
-    initials: "SC",
-    coverGradient: "from-[#182d54] via-[#10203d] to-[#0a1324]",
-  },
-  {
-    id: "my-book-3",
-    title: "The Paper Lantern Express",
-    author: "Mina & Kaito Sato",
-    category: "Kids",
-    copies: "5 / 6",
-    description: "A heartwarming illustrated adventure following two...",
-    initials: "KI",
-    coverGradient: "from-[#631427] via-[#450d1a] to-[#26060e]",
-  },
-  {
-    id: "my-book-4",
-    title: "Designing Calm Spaces",
-    author: "Soren Lindqvist",
-    category: "Others",
-    copies: "4 / 4",
-    description: "Practical architectural principles for crafting quiet...",
-    initials: "OT",
-    coverGradient: "from-[#26282b] via-[#1a1c1e] to-[#111213]",
-  },
-];
-
 export default async function MyBooksPage() {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  const userEmail = session?.user?.email;
 
-    const session = await auth.api.getSession({
-    headers: await headers() // you need to pass the headers object.
-})
-const userEmail = session?.user?.email
+  const res = await fetch(`http://localhost:5000/my-books?email=${userEmail}`);
+  const myBooks: IBook[] = res.ok ? await res.json() : [];
 
-
-    const res = await fetch(`http://localhost:5000/my-books?email=${userEmail}`)
-    const myBooks: IBook[] = await res.json()
-
+  const hasBooks = Array.isArray(myBooks) && myBooks.length > 0;
 
   return (
     <div className="min-h-screen bg-background text-foreground transition-colors">
@@ -85,31 +40,51 @@ const userEmail = session?.user?.email
           </Link>
         </div>
 
-        {/* Books Table Container */}
+        {/* Books Content */}
         <div className="py-8">
-          <div className="bg-card rounded-3xl border border-border/80 shadow-xs overflow-hidden">
-            <div className="overflow-x-auto">
-              <div className="min-w-[820px]">
-                {/* Table Header Row */}
-                <div className="grid grid-cols-12 items-center px-6 py-4.5 border-b border-border/70 text-[11px] font-semibold text-muted-foreground uppercase tracking-wider select-none">
-                  <div className="col-span-5">COVER & TITLE</div>
-                  <div className="col-span-2">AUTHOR</div>
-                  <div className="col-span-2">CATEGORY</div>
-                  <div className="col-span-1 text-center">COPIES</div>
-                  <div className="col-span-2 text-right">
-                    ACTIONS [UPDATE & DELETE]
+          {hasBooks ? (
+            <div className="bg-card rounded-3xl border border-border/80 shadow-xs overflow-hidden">
+              <div className="overflow-x-auto">
+                <div className="min-w-[820px]">
+                  {/* Table Header Row */}
+                  <div className="grid grid-cols-12 items-center px-6 py-4.5 border-b border-border/70 text-[11px] font-semibold text-muted-foreground uppercase tracking-wider select-none">
+                    <div className="col-span-5">COVER & TITLE</div>
+                    <div className="col-span-2">AUTHOR</div>
+                    <div className="col-span-2">CATEGORY</div>
+                    <div className="col-span-1 text-center">COPIES</div>
+                    <div className="col-span-2 text-right">
+                      ACTIONS [UPDATE & DELETE]
+                    </div>
                   </div>
-                </div>
 
-                {/* Book Rows */}
-                <div className="divide-y divide-border/60">
-                  {myBooks.map((book) => (
-                    <MyBookRow key={book._id} book={book} />
-                  ))}
+                  {/* Book Rows */}
+                  <div className="divide-y divide-border/60">
+                    {myBooks.map((book) => (
+                      <MyBookRow key={book._id} book={book} />
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center text-center py-16 sm:py-20 px-4 bg-card rounded-3xl border border-dashed border-border/90 shadow-2xs">
+              <div className="w-16 h-16 rounded-2xl bg-[#164e38]/10 text-[#164e38] dark:text-emerald-400 flex items-center justify-center mb-4">
+                <BookOpen className="w-8 h-8 opacity-80" />
+              </div>
+              <h2 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">
+                You haven&apos;t added any books yet
+              </h2>
+              <p className="text-muted-foreground text-sm max-w-md mt-2 mb-6">
+                Contribute your first book to see it listed here with Edit and Delete controls.
+              </p>
+              <Link href="/add-books">
+                <Button className="bg-[#164e38] hover:bg-[#123e2d] text-white gap-2 h-11 px-6 rounded-xl cursor-pointer">
+                  <Plus className="w-4 h-4" />
+                  <span>Add Your First Book</span>
+                </Button>
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </div>
