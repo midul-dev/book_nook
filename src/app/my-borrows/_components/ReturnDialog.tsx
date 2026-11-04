@@ -10,9 +10,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { BorrowContext } from "@/context/BorrowContext";
 import { RotateCcw } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { toast } from "sonner";
 
 export interface IBorrowItem {
@@ -29,6 +30,7 @@ export interface IBorrowItem {
 }
 
 export function ReturnBookDialog({ book }: { book: IBorrowItem }) {
+  const {borrowCount, setBorrowCount} = useContext(BorrowContext)
   const [isReturning, setIsReturning] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
@@ -48,6 +50,7 @@ export function ReturnBookDialog({ book }: { book: IBorrowItem }) {
         toast.success(data.message || "Book returned successfully!");
         setIsOpen(false);
         router.refresh();
+        setBorrowCount(borrowCount - 1)
       } else {
         toast.error(data.error || "Failed to return book");
       }

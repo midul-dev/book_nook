@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { Toaster } from "sonner";
+import BorrowProvider from "@/context/BorrowContext";
 
 const openSans = Open_Sans({
   subsets: ["latin"],
@@ -31,10 +32,12 @@ export default function RootLayout({
       <body
         className={`${openSans.className} min-h-full flex flex-col bg-background text-foreground selection:bg-amber-200 selection:text-amber-950`}
       >
+        <BorrowProvider>
         <Navbar />
         <main>{children}</main>
         <Footer/>
         <Toaster position="top-center" />
+        </BorrowProvider>
       </body>
     </html>
   );

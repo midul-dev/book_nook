@@ -1,10 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import {
-  ArrowLeft,
-  BookOpen,
-} from "lucide-react";
+import { ArrowLeft, BookOpen } from "lucide-react";
 import { IBook } from "@/types";
 import DetailCard from "./_components/DetailCard";
 
@@ -15,12 +12,9 @@ interface Props {
 export default async function BookDetailPage({ params }: Props) {
   const { bookId } = await params;
 
-  const res = await fetch(
-    `http://localhost:5000/all-books/${bookId}`,
-    {
-      cache: "no-store",
-    }
-  );
+  const res = await fetch(`http://localhost:5000/all-books/${bookId}`, {
+    cache: "no-store",
+  });
 
   if (res.status === 404) notFound();
 
@@ -36,9 +30,7 @@ export default async function BookDetailPage({ params }: Props) {
 
   return (
     <main className="min-h-screen bg-[#fafaf9] px-4 py-10 sm:px-6 lg:px-8">
-
       <div className="mx-auto max-w-6xl">
-
         {/* Back Navigation */}
         <Link
           href="/books"
@@ -52,11 +44,10 @@ export default async function BookDetailPage({ params }: Props) {
         </Link>
 
         {/* Main Book Card */}
-       <DetailCard book={book} totalCopies={totalCopies} />
+        <DetailCard book={book} totalCopies={totalCopies} />
 
         {/* Bottom Message */}
         <div className="mt-10 flex flex-col items-center text-center">
-
           <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-emerald-100 text-emerald-800">
             <BookOpen size={21} />
           </div>
@@ -66,12 +57,10 @@ export default async function BookDetailPage({ params }: Props) {
           </h2>
 
           <p className="mt-2 max-w-md text-sm leading-6 text-stone-500">
-            Every book is an opportunity to discover something new.
-            Find your next favorite story at BookNook.
+            Every book is an opportunity to discover something new. Find your
+            next favorite story at BookNook.
           </p>
-
         </div>
-
       </div>
     </main>
   );

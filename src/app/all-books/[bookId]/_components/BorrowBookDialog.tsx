@@ -1,6 +1,6 @@
 "use client";
 
-import { useImperativeHandle, useState } from "react";
+import { useContext, useImperativeHandle, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -17,10 +17,16 @@ import { ArrowUpRight } from "lucide-react";
 import { useSession } from "@/lib/auth-client";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { BorrowContext } from "@/context/BorrowContext";
 
-// প্রপস হিসেবে book এবং লগ-ইন করা ইউজারের ডেটা নিচ্ছি
+
+
 export function BorrowBookDialog({ book }: { book: IBook }) {
 const router = useRouter()
+const {borrowCount, setBorrowCount} = useContext(BorrowContext)
+
+
+
 
   const [isBorrowing, setIsBorrowing] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -61,6 +67,7 @@ const router = useRouter()
       if (res.ok) {
         setIsOpen(false)
         toast.success(data.message);
+        setBorrowCount(borrowCount+1)
       } else {
         toast.error(data.error);
       }

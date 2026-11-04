@@ -142,23 +142,21 @@ const DetailCard = async ({
             </div>
           </div>
 
-        {/* Action Buttons */}
-<div className="flex flex-col sm:flex-row gap-3 w-full">
-  
-  {/* ১. Borrow Button (flex-1 দিয়ে সমান করা হয়েছে) */}
-  <div className="flex-1 flex">
-    <BorrowBookDialog book={book} /> 
-  </div>
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row gap-3 w-full">
+            {/* ১. Borrow Button (flex-1 দিয়ে সমান করা হয়েছে) */}
+            <div className="flex-1 flex">
+              <BorrowBookDialog book={book} />
+            </div>
 
-  {/* ২. Explore Books Link (flex-1 দিয়ে সমান করা হয়েছে) */}
-  <Link
-    href="/all-books"
-    className="flex-1 flex h-9 items-center justify-center rounded-xl border border-stone-200 px-6 text-sm font-semibold text-stone-700 transition-all hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-800"
-  >
-    Explore More
-  </Link>
-  
-</div>
+            {/* ২. Explore Books Link (flex-1 দিয়ে সমান করা হয়েছে) */}
+            <Link
+              href="/all-books"
+              className="flex-1 flex h-9 items-center justify-center rounded-xl border border-stone-200 px-6 text-sm font-semibold text-stone-700 transition-all hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-800"
+            >
+              Explore More
+            </Link>
+          </div>
 
           {/* Footer Note */}
           <p className="mt-5 text-center text-xs text-stone-400 sm:text-left">

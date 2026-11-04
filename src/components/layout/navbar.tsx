@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
@@ -21,6 +21,7 @@ import { signOut, useSession } from "@/lib/auth-client";
 import { Skeleton } from "../ui/skeleton";
 import { toast } from "sonner";
 import Image from "next/image";
+import { BorrowContext } from "@/context/BorrowContext";
 
 interface NavbarProps {
   borrowCount?: number;
@@ -29,12 +30,14 @@ interface NavbarProps {
   setActiveNav?: (nav: string) => void;
 }
 
-export function Navbar({ borrowCount = 2, onOpenAddBook }: NavbarProps) {
+export function Navbar() {
   const router = useRouter()
   const pathname = usePathname();
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  
+  const {borrowCount, setBorrowCount} = useContext(BorrowContext)
 
   useEffect(() => {
     const isDark = document.documentElement.classList.contains("dark");
@@ -43,6 +46,10 @@ export function Navbar({ borrowCount = 2, onOpenAddBook }: NavbarProps) {
     });
   }, []);
 
+  const { data: session, isPending, error } = useSession();
+  const user = session?.user;
+
+  
   const toggleDarkMode = () => {
     const nextState = !isDarkMode;
     setIsDarkMode(nextState);
@@ -53,8 +60,6 @@ export function Navbar({ borrowCount = 2, onOpenAddBook }: NavbarProps) {
     }
   };
 
-  const { data: session, isPending, error } = useSession();
-  const user = session?.user;
 
   const handleSignOut = async () => {
     await signOut();
