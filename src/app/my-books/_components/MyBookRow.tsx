@@ -6,6 +6,7 @@ import { IBook } from "@/types";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { DeleteBookDialog } from "./DeleteDialog";
+import { EditBookDialog } from "./EditDailog";
 
 interface MyBookRowProps {
   book: IBook;
@@ -73,18 +74,8 @@ export function MyBookRow({ book }: MyBookRowProps) {
 
       {/* 5. Actions (Update & Delete) */}
       <div className="col-span-2 flex items-center justify-end gap-2">
-        <button
-          type="button"
-          className="px-3.5 py-1 text-xs font-medium rounded-full bg-[#fef5e7] hover:bg-[#fbe8ce] text-[#9c530c] dark:bg-amber-950/40 dark:hover:bg-amber-900/50 dark:text-amber-300 transition-all cursor-pointer shadow-2xs active:scale-95"
-        >
-          Edit
-        </button>
-        <div
-          
-          className="px-3.5 py-1 text-xs font-medium rounded-full bg-[#fef0f2] hover:bg-[#fde0e5] text-[#c0264b] dark:bg-rose-950/40 dark:hover:bg-rose-900/50 dark:text-rose-300 transition-all cursor-pointer shadow-2xs active:scale-95"
-        >
+          <EditBookDialog book={book} />
           <DeleteBookDialog book={book} />
-        </div>
       </div>
     </div>
   );
