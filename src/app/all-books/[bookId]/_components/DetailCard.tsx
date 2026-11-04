@@ -1,8 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { auth } from "@/lib/auth";
 import { IBook } from "@/types";
-import { ArrowUpRight, BookOpen, Package, UserRound } from "lucide-react";
-import { headers } from "next/headers";
+import { BookOpen, Package, UserRound } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { BorrowBookDialog } from "./BorrowBookDialog";

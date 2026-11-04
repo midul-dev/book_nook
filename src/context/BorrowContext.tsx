@@ -1,39 +1,33 @@
 "use client";
-
 import { useSession } from "@/lib/auth-client";
 import React, { createContext, ReactNode, useEffect, useState } from "react";
 
-interface BorrowContextType {
-  borrowCount: number;
-  setBorrowCount: React.Dispatch<React.SetStateAction<number>>;
-}
-
-export const BorrowContext = createContext({})
+export const BorrowContext = createContext({});
 
 const BorrowProvider = ({ children }: { children: ReactNode }) => {
   const [borrowCount, setBorrowCount] = useState(0);
 
   const { data: session, isPending, error } = useSession();
-    const user = session?.user;
+  const user = session?.user;
 
-useEffect(() =>{
-    if(user?.email){
-      fetch(`http://localhost:5000/borrow-count?email=${user.email}`).then(res=> res.json()).then(data=>{
-        if(data.count){
-          setBorrowCount(data.count)
-        }
-      })
+  useEffect(() => {
+    if (user?.email) {
+      fetch(`${process.env.SERVER_URL}/borrow-count?email=${user.email}`)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.count) {
+            setBorrowCount(data.count);
+          }
+        });
     }
-  },[user?.email])
-
-
-  
- 
+  }, [user?.email]);
 
   const sharedBooks = { borrowCount, setBorrowCount };
 
   return (
-    <BorrowContext.Provider value={sharedBooks}>{children}</BorrowContext.Provider>
+    <BorrowContext.Provider value={sharedBooks}>
+      {children}
+    </BorrowContext.Provider>
   );
 };
 

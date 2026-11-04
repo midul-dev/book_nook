@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState } from "react";
 import Link from "next/link";
 import {
@@ -13,7 +12,6 @@ import {
   Calendar,
   Sparkles,
   BookOpen,
-  AlertCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -32,14 +30,12 @@ export default function UserProfilePage() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  
-
-  // Edit 
+  // Edit
   const handleStartEdit = () => {
     setIsEditingName(true);
   };
 
-  // Edit 
+  // Edit
   const handleCancelEdit = () => {
     setIsEditingName(false);
   };
@@ -60,7 +56,6 @@ export default function UserProfilePage() {
     toast.success("Profile updated successfully!");
   };
 
-  
   //   First Letter
   const initials = user?.name
     ? user.name

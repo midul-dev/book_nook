@@ -1,8 +1,7 @@
 "use client";
-
 import hero from "@/assets/hero.jpg";
 import Image from "next/image";
-import { ArrowRight, BookOpen, Sparkles, CheckCircle2 } from "lucide-react";
+import { ArrowRight, BookOpen, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 
 interface HeroBannerProps {
@@ -21,7 +20,9 @@ export function HeroBanner({ onBrowseClick }: HeroBannerProps) {
           <div className="lg:col-span-5 p-8 sm:p-12 md:p-14 lg:p-16 flex flex-col justify-between h-full z-10 space-y-8">
             <div className="space-y-5">
               {/* Refined Eyebrow Badge */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-900/10 dark:bg-emerald-400/10 text-emerald-900 dark:text-emerald-300 text-xs font-medium border border-emerald-700/15 backdrop-blur-xs"> <span className="flex h-2 w-2 relative">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-900/10 dark:bg-emerald-400/10 text-emerald-900 dark:text-emerald-300 text-xs font-medium border border-emerald-700/15 backdrop-blur-xs">
+                {" "}
+                <span className="flex h-2 w-2 relative">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-600"></span>
                 </span>
@@ -40,7 +41,10 @@ export function HeroBanner({ onBrowseClick }: HeroBannerProps) {
 
               {/* Description Paragraph */}
               <p className="text-stone-600 dark:text-stone-300 text-sm sm:text-base leading-relaxed max-w-md font-normal">
-                Borrow and discover curated science, history, modern fiction, and children&apos;s literature from our neighborhood community shelves. Every volume features real-time copy availability so you always know what is ready on the shelf.
+                Borrow and discover curated science, history, modern fiction,
+                and children&apos;s literature from our neighborhood community
+                shelves. Every volume features real-time copy availability so
+                you always know what is ready on the shelf.
               </p>
 
               {/* Action Buttons */}
@@ -63,9 +67,6 @@ export function HeroBanner({ onBrowseClick }: HeroBannerProps) {
                   <span>Browse All Books</span>
                 </Link>
               </div>
-
-            
-             
             </div>
 
             {/* Bottom Quick Feature Highlights */}

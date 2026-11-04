@@ -14,16 +14,19 @@ export default async function MyBorrowsPage() {
   });
   const userEmail = session?.user?.email;
 
- const token = await jwtAuthTokenServer()
+  const token = await jwtAuthTokenServer();
 
   let borrowedBooks: IBorrowItem[] = [];
   try {
     if (userEmail) {
-      const res = await fetch(`http://localhost:5000/my-borrows?email=${userEmail}`,{
-        headers : {
-        "authorization": `Bearer ${token}`,
-        }
-      });
+      const res = await fetch(
+        `${process.env.SERVER_URL}/my-borrows?email=${userEmail}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        },
+      );
       if (res.ok) {
         borrowedBooks = await res.json();
       }
@@ -44,7 +47,8 @@ export default async function MyBorrowsPage() {
               My Borrowed Books
             </h1>
             <p className="text-muted-foreground text-sm max-w-2xl">
-              Volumes currently checked out to your profile. Track return deadlines and return finished volumes to the shelf.
+              Volumes currently checked out to your profile. Track return
+              deadlines and return finished volumes to the shelf.
             </p>
           </div>
 
@@ -91,7 +95,9 @@ export default async function MyBorrowsPage() {
                 No Active Borrows
               </h2>
               <p className="text-muted-foreground text-sm max-w-md mt-2 mb-6">
-                You haven&apos;t borrowed any books from the library yet, or all borrowed editions have been returned. Discover your next read from the catalog!
+                You haven&apos;t borrowed any books from the library yet, or all
+                borrowed editions have been returned. Discover your next read
+                from the catalog!
               </p>
               <Link href="/all-books">
                 <Button className="bg-[#164e38] hover:bg-[#123e2d] text-white gap-2 h-11 px-6 rounded-xl cursor-pointer">

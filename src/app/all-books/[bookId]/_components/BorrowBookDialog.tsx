@@ -1,7 +1,5 @@
 "use client";
-
-import { useContext, useImperativeHandle, useState } from "react";
-import { Button } from "@/components/ui/button";
+import { useContext, useState } from "react";
 import {
   Dialog,
   DialogClose,
@@ -19,14 +17,12 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { BorrowContext } from "@/context/BorrowContext";
 
-
-
 export function BorrowBookDialog({ book }: { book: IBook }) {
-const router = useRouter()
-const {borrowCount, setBorrowCount} = useContext(BorrowContext)
-
-
-
+  const router = useRouter();
+  const { borrowCount, setBorrowCount } = useContext(BorrowContext) as {
+    borrowCount: number;
+    setBorrowCount: (count: number) => void;
+  };
 
   const [isBorrowing, setIsBorrowing] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -34,7 +30,7 @@ const {borrowCount, setBorrowCount} = useContext(BorrowContext)
   const { data: session } = useSession();
   const user = session?.user;
 
-  // আজকের তারিখ বের করা (Format: DD-MM-YYYY)
+  //  (Format: DD-MM-YYYY)
   const today = new Date();
   const borrowDateStr = `${String(today.getDate()).padStart(2, "0")}-${String(today.getMonth() + 1).padStart(2, "0")}-${today.getFullYear()}`;
 
@@ -47,16 +43,16 @@ const {borrowCount, setBorrowCount} = useContext(BorrowContext)
       string,
       string
     >;
-    const{_id, ...restBook} = book
+    const { _id, ...restBook } = book;
     const borrowBooks = {
-        bookId : _id,
-        ...restBook,
-        ...userData
-    }
+      bookId: _id,
+      ...restBook,
+      ...userData,
+    };
 
     //  POST API
     try {
-      const res = await fetch("http://localhost:5000/add-borrow", {
+      const res = await fetch(`${process.env.SERVER_URL}/add-borrow`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -65,16 +61,16 @@ const {borrowCount, setBorrowCount} = useContext(BorrowContext)
       });
       const data = await res.json();
       if (res.ok) {
-        setIsOpen(false)
+        setIsOpen(false);
         toast.success(data.message);
-        setBorrowCount(borrowCount+1)
+        setBorrowCount(borrowCount + 1);
       } else {
         toast.error(data.error);
       }
     } catch (error) {
       toast.error("Network error. Please try again.");
     } finally {
-        router.push("/my-borrows")
+      router.push("/my-borrows");
       setIsBorrowing(false);
     }
   };

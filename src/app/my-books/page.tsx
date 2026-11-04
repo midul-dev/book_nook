@@ -15,11 +15,14 @@ export default async function MyBooksPage() {
   const userEmail = session?.user?.email;
   const token = await jwtAuthTokenServer();
 
-  const res = await fetch(`http://localhost:5000/my-books?email=${userEmail}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
+  const res = await fetch(
+    `${process.env.SERVER_URL}/my-books?email=${userEmail}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     },
-  });
+  );
   const myBooks: IBook[] = res.ok ? await res.json() : [];
 
   const hasBooks = Array.isArray(myBooks) && myBooks.length > 0;

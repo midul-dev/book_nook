@@ -43,14 +43,17 @@ export function ReturnBookDialog({ book }: { book: IBorrowItem }) {
     const token = await jwtAuthTokenClient();
     try {
       // First try /return-book endpoint, if not available try delete-borrow
-      const res = await fetch(`http://localhost:5000/return-book/${borrowId}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+      const res = await fetch(
+        `${process.env.SERVER_URL}/return-book/${borrowId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ bookId }),
         },
-        body: JSON.stringify({ bookId }),
-      });
+      );
       const data = await res.json();
 
       if (res.ok) {

@@ -1,14 +1,9 @@
 "use client";
-
 import React from "react";
 import Link from "next/link";
 import { BookOpen, MapPin, Mail, Phone, MessageSquare } from "lucide-react";
 
-interface FooterProps {
-  onOpenAddBook?: () => void;
-}
-
-export function Footer({ onOpenAddBook }: FooterProps) {
+export function Footer() {
   return (
     <footer className="w-full bg-[#0d1217] text-stone-300 border-t border-stone-800 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -30,8 +25,9 @@ export function Footer({ onOpenAddBook }: FooterProps) {
             </div>
 
             <p className="text-stone-400 text-xs sm:text-sm leading-relaxed max-w-sm">
-              BookNook is a neighborhood online library built around a simple community promise: add a book from your
-              shelf, borrow a book for a few days, and return it for the next reader.
+              BookNook is a neighborhood online library built around a simple
+              community promise: add a book from your shelf, borrow a book for a
+              few days, and return it for the next reader.
             </p>
 
             {/* Social Links */}
@@ -81,27 +77,42 @@ export function Footer({ onOpenAddBook }: FooterProps) {
             </h4>
             <ul className="space-y-2 text-xs sm:text-sm">
               <li>
-                <Link href="/" className="text-stone-400 hover:text-white transition">
+                <Link
+                  href="/"
+                  className="text-stone-400 hover:text-white transition"
+                >
                   Home
                 </Link>
               </li>
               <li>
-                <Link href="/all-books" className="text-stone-400 hover:text-white transition">
+                <Link
+                  href="/all-books"
+                  className="text-stone-400 hover:text-white transition"
+                >
                   All Books
                 </Link>
               </li>
               <li>
-                <Link href="/add-books" className="text-stone-400 hover:text-white transition">
+                <Link
+                  href="/add-books"
+                  className="text-stone-400 hover:text-white transition"
+                >
                   Add Book
                 </Link>
               </li>
               <li>
-                <Link href="/my-books" className="text-stone-400 hover:text-white transition">
+                <Link
+                  href="/my-books"
+                  className="text-stone-400 hover:text-white transition"
+                >
                   My Books
                 </Link>
               </li>
               <li>
-                <Link href="/my-borrows" className="text-stone-400 hover:text-white transition">
+                <Link
+                  href="/my-borrows"
+                  className="text-stone-400 hover:text-white transition"
+                >
                   My Borrows
                 </Link>
               </li>
@@ -123,7 +134,10 @@ export function Footer({ onOpenAddBook }: FooterProps) {
               </li>
               <li className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-emerald-400 shrink-0" />
-                <a href="mailto:librarian@booknook.org" className="hover:text-white transition">
+                <a
+                  href="mailto:librarian@booknook.org"
+                  className="hover:text-white transition"
+                >
                   librarian@booknook.org
                 </a>
               </li>
@@ -137,7 +151,10 @@ export function Footer({ onOpenAddBook }: FooterProps) {
 
         {/* Bottom Sub-footer */}
         <div className="mt-12 pt-8 border-t border-stone-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-stone-400 font-mono">
-          <p>© 2026 BookNook Online Library. All rights reserved. Built with Next.js App Router, BetterAuth, Express & MongoDB</p>
+          <p>
+            © 2026 BookNook Online Library. All rights reserved. Built with
+            Next.js App Router, BetterAuth, Express & MongoDB
+          </p>
           <div className="flex items-center gap-2 text-stone-400">
             <span>SPA Reload-Safe</span>
             <span>•</span>

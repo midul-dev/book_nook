@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useEffect, useContext } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -10,12 +9,9 @@ import {
   ChevronDown,
   Menu,
   X,
-  PlusCircle,
-  Bookmark,
   User,
   LogOut,
 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { signOut, useSession } from "@/lib/auth-client";
 import { Skeleton } from "../ui/skeleton";
@@ -23,21 +19,14 @@ import { toast } from "sonner";
 import Image from "next/image";
 import { BorrowContext } from "@/context/BorrowContext";
 
-interface NavbarProps {
-  borrowCount?: number;
-  onOpenAddBook?: () => void;
-  activeNav?: string;
-  setActiveNav?: (nav: string) => void;
-}
-
 export function Navbar() {
-  const router = useRouter()
+  const router = useRouter();
   const pathname = usePathname();
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  
-  const {borrowCount, setBorrowCount} = useContext(BorrowContext)
+
+  const { borrowCount } = useContext(BorrowContext) as { borrowCount: number };
 
   useEffect(() => {
     const isDark = document.documentElement.classList.contains("dark");
@@ -49,7 +38,6 @@ export function Navbar() {
   const { data: session, isPending, error } = useSession();
   const user = session?.user;
 
-  
   const toggleDarkMode = () => {
     const nextState = !isDarkMode;
     setIsDarkMode(nextState);
@@ -60,10 +48,9 @@ export function Navbar() {
     }
   };
 
-
   const handleSignOut = async () => {
     await signOut();
-    router.push("/")
+    router.push("/");
     toast.success("Successfully signed out! Redirecting to homepage...");
     setIsProfileOpen(false);
   };
@@ -134,7 +121,6 @@ export function Navbar() {
 
         {/* Right Tools (Theme Toggle, Profile, Quick Actions) */}
         <div className="flex items-center gap-2.5">
-        
           {/* Dark Mode Switcher */}
           <button
             onClick={toggleDarkMode}

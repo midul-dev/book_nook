@@ -31,14 +31,17 @@ export function EditBookDialog({ book }: { book: IBook }) {
     //  PATCH API
     const token = await jwtAuthTokenClient();
     try {
-      const res = await fetch(`http://localhost:5000/update-book/${book._id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+      const res = await fetch(
+        `${process.env.SERVER_URL}/update-book/${book._id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(updatedBook),
         },
-        body: JSON.stringify(updatedBook),
-      });
+      );
       const data = await res.json();
 
       if (res.ok) {

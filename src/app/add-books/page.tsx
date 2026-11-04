@@ -34,7 +34,7 @@ export default function AddBooksPage() {
     const token = await jwtAuthTokenClient();
 
     try {
-      const res = await fetch("http://localhost:5000/add-books", {
+      const res = await fetch(`${process.env.SERVER_URL}/add-books`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

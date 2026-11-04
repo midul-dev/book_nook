@@ -1,10 +1,7 @@
 "use client";
-
 import React from "react";
 import Image from "next/image";
 import { IBook } from "@/types";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 import { DeleteBookDialog } from "./DeleteDialog";
 import { EditBookDialog } from "./EditDailog";
 
@@ -13,10 +10,6 @@ interface MyBookRowProps {
 }
 
 export function MyBookRow({ book }: MyBookRowProps) {
- 
-
-  
-
   return (
     <div className="grid grid-cols-12 items-center px-6 py-4.5 hover:bg-muted/40 transition-colors">
       {/* 1. Cover & Title */}
@@ -74,8 +67,8 @@ export function MyBookRow({ book }: MyBookRowProps) {
 
       {/* 5. Actions (Update & Delete) */}
       <div className="col-span-2 flex items-center justify-end gap-2">
-          <EditBookDialog book={book} />
-          <DeleteBookDialog book={book} />
+        <EditBookDialog book={book} />
+        <DeleteBookDialog book={book} />
       </div>
     </div>
   );

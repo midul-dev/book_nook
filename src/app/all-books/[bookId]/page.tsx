@@ -13,13 +13,13 @@ interface Props {
 export default async function BookDetailPage({ params }: Props) {
   const { bookId } = await params;
 
-  const token = await jwtAuthTokenServer()
+  const token = await jwtAuthTokenServer();
 
-  const res = await fetch(`http://localhost:5000/all-books/${bookId}`, {
+  const res = await fetch(`${process.env.SERVER_URL}/all-books/${bookId}`, {
     cache: "no-store",
     headers: {
       Authorization: `Bearer ${token}`,
-    }
+    },
   });
 
   if (res.status === 404) notFound();

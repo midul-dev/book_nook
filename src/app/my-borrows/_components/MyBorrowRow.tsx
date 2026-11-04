@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { BookOpen, Calendar, Clock } from "lucide-react";
+import { BookOpen, Clock } from "lucide-react";
 import { ReturnBookDialog, IBorrowItem } from "./ReturnDialog";
 
 interface MyBorrowRowProps {

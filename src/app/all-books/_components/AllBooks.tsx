@@ -10,10 +10,6 @@ const AllBooks = ({ books }: { books: IBook[] }) => {
   const [selectedCategory, setSelectedCategory] = useState<
     BookCategory | "All"
   >("All");
-  //   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
-  //   const [isDetailOpen, setIsDetailOpen] = useState(false);
-  //   const [isAddBookOpen, setIsAddBookOpen] = useState(false);
-  //   const [borrowedBookIds, setBorrowedBookIds] = useState<string[]>(["book-4", "book-1"]);
 
   const categories: (BookCategory | "All")[] = [
     "All",
@@ -85,7 +81,7 @@ const AllBooks = ({ books }: { books: IBook[] }) => {
             No Books Found
           </h3>
           <p className="text-xs text-muted-foreground mt-1">
-            No titles matched your query "{search}". Try a different category or
+            No titles matched your query &ldquo;{search}&rdquo;. Try a different category or
             search term.
           </p>
         </div>
