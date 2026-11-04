@@ -28,7 +28,7 @@ const router = useRouter()
     const formData = new FormData(e.currentTarget);
     const updatedBook = Object.fromEntries(formData.entries());
 
-    // এখানে তোমার PATCH API লজিক বসাবে
+    //  PATCH API 
     try {
       const res = await fetch(`http://localhost:5000/update-book/${book._id}`, {
         method: "PATCH",
