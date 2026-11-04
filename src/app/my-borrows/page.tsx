@@ -6,6 +6,7 @@ import { MyBorrowRow } from "./_components/MyBorrowRow";
 import { IBorrowItem } from "./_components/ReturnDialog";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import { jwtAuthTokenServer } from "@/lib/functions/jwt_auth_tokens/jwtAuthTokenServer";
 
 export default async function MyBorrowsPage() {
   const session = await auth.api.getSession({
@@ -13,10 +14,16 @@ export default async function MyBorrowsPage() {
   });
   const userEmail = session?.user?.email;
 
+ const token = await jwtAuthTokenServer()
+
   let borrowedBooks: IBorrowItem[] = [];
   try {
     if (userEmail) {
-      const res = await fetch(`http://localhost:5000/my-borrows?email=${userEmail}`);
+      const res = await fetch(`http://localhost:5000/my-borrows?email=${userEmail}`,{
+        headers : {
+        "authorization": `Bearer ${token}`,
+        }
+      });
       if (res.ok) {
         borrowedBooks = await res.json();
       }

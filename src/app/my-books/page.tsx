@@ -6,14 +6,20 @@ import { MyBookRow } from "./_components/MyBookRow";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { IBook } from "@/types";
+import { jwtAuthTokenServer } from "@/lib/functions/jwt_auth_tokens/jwtAuthTokenServer";
 
 export default async function MyBooksPage() {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
   const userEmail = session?.user?.email;
+  const token = await jwtAuthTokenServer();
 
-  const res = await fetch(`http://localhost:5000/my-books?email=${userEmail}`);
+  const res = await fetch(`http://localhost:5000/my-books?email=${userEmail}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
   const myBooks: IBook[] = res.ok ? await res.json() : [];
 
   const hasBooks = Array.isArray(myBooks) && myBooks.length > 0;
@@ -28,7 +34,8 @@ export default async function MyBooksPage() {
               My Contributed Books
             </h1>
             <p className="text-muted-foreground text-sm max-w-2xl">
-              Manage your contributed volumes, track available copies, and update library catalog entries.
+              Manage your contributed volumes, track available copies, and
+              update library catalog entries.
             </p>
           </div>
 
@@ -75,7 +82,8 @@ export default async function MyBooksPage() {
                 You haven&apos;t added any books yet
               </h2>
               <p className="text-muted-foreground text-sm max-w-md mt-2 mb-6">
-                Contribute your first book to see it listed here with Edit and Delete controls.
+                Contribute your first book to see it listed here with Edit and
+                Delete controls.
               </p>
               <Link href="/add-books">
                 <Button className="bg-[#164e38] hover:bg-[#123e2d] text-white gap-2 h-11 px-6 rounded-xl cursor-pointer">

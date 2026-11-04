@@ -1,47 +1,53 @@
 "use client";
-
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { jwtAuthTokenClient } from "@/lib/functions/jwt_auth_tokens/jwtAuthTokenClient";
 import { IBook } from "@/types";
 import { Trash, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 
-export function DeleteBookDialog({book} : {book:IBook}) {
-    const [isDeleting, setISDeleting] = useState(false)
+export function DeleteBookDialog({ book }: { book: IBook }) {
+  const [isDeleting, setISDeleting] = useState(false);
 
-     const router = useRouter();
+  const router = useRouter();
 
-    const handleDeletemyBooks = async (bookId: string) => {
-        setISDeleting(true)
-        const res = await fetch(`http://localhost:5000/delete-book/${bookId}`, {
-          method: "DELETE",
-        });
-        const data = await res.json();
-    
-        if (res.ok) {
-          toast.success(data.message);
-        } else {
-          toast.error(data.error);
-        }
-        router.refresh();
-        setISDeleting(false)
-      };
+  const handleDeletemyBooks = async (bookId: string) => {
+    setISDeleting(true);
+
+    const token = await jwtAuthTokenClient();
+    const res = await fetch(`http://localhost:5000/delete-book/${bookId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      toast.success(data.message);
+    } else {
+      toast.error(data.error);
+    }
+    router.refresh();
+    setISDeleting(false);
+  };
 
   return (
     <Dialog>
-      <DialogTrigger className='cursor-pointer px-3.5 py-1 text-xs font-medium rounded-full bg-[#fef0f2] hover:bg-[#fde0e5] text-[#c0264b] dark:bg-rose-950/40 dark:hover:bg-rose-900/50 dark:text-rose-300 transition-all cursor-pointer shadow-2xs active:scale-95 flex'>
-       <Trash className="mr-2 h-3.5 w-3.5"/> Delete</DialogTrigger>
+      <DialogTrigger className="cursor-pointer px-3.5 py-1 text-xs font-medium rounded-full bg-[#fef0f2] hover:bg-[#fde0e5] text-[#c0264b] dark:bg-rose-950/40 dark:hover:bg-rose-900/50 dark:text-rose-300 transition-all cursor-pointer shadow-2xs active:scale-95 flex">
+        <Trash className="mr-2 h-3.5 w-3.5" /> Delete
+      </DialogTrigger>
 
       {/* Modal Content - ইমেজের মতো রাউন্ডেড এবং প্যাডিং দেওয়া হয়েছে */}
       <DialogContent className="sm:max-w-md rounded-[2rem] p-6 sm:p-10 border-0 shadow-2xl">
@@ -61,7 +67,6 @@ export function DeleteBookDialog({book} : {book:IBook}) {
             <div className="text-[15px] font-semibold text-[#c0264b]">
               {`${book.title} by ${book.author}`}
             </div>
-
           </DialogHeader>
         </div>
 

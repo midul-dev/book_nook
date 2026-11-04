@@ -1,5 +1,4 @@
 "use client";
-
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -11,6 +10,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { BorrowContext } from "@/context/BorrowContext";
+import { jwtAuthTokenClient } from "@/lib/functions/jwt_auth_tokens/jwtAuthTokenClient";
 import { RotateCcw } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
@@ -30,18 +30,25 @@ export interface IBorrowItem {
 }
 
 export function ReturnBookDialog({ book }: { book: IBorrowItem }) {
-  const {borrowCount, setBorrowCount} = useContext(BorrowContext)
+  const { borrowCount, setBorrowCount } = useContext(BorrowContext) as {
+    borrowCount: number;
+    setBorrowCount: (count: number) => void;
+  };
   const [isReturning, setIsReturning] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
   const handleReturnBook = async (borrowId: string, bookId?: string) => {
     setIsReturning(true);
+    const token = await jwtAuthTokenClient();
     try {
       // First try /return-book endpoint, if not available try delete-borrow
       const res = await fetch(`http://localhost:5000/return-book/${borrowId}`, {
         method: "DELETE",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify({ bookId }),
       });
       const data = await res.json();
@@ -50,7 +57,7 @@ export function ReturnBookDialog({ book }: { book: IBorrowItem }) {
         toast.success(data.message || "Book returned successfully!");
         setIsOpen(false);
         router.refresh();
-        setBorrowCount(borrowCount - 1)
+        setBorrowCount(borrowCount - 1);
       } else {
         toast.error(data.error || "Failed to return book");
       }
@@ -63,15 +70,16 @@ export function ReturnBookDialog({ book }: { book: IBorrowItem }) {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger className="cursor-pointer">
-        Return
-      </DialogTrigger>
+      <DialogTrigger className="cursor-pointer">Return</DialogTrigger>
 
       <DialogContent className="sm:max-w-md rounded-[2rem] p-6 sm:p-10 border-0 shadow-2xl bg-card">
         <div className="flex flex-col items-center justify-center">
           {/* Rotate / Return Icon */}
           <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-amber-100 dark:bg-amber-950/50">
-            <RotateCcw className="h-7 w-7 text-amber-700 dark:text-amber-400" strokeWidth={2.5} />
+            <RotateCcw
+              className="h-7 w-7 text-amber-700 dark:text-amber-400"
+              strokeWidth={2.5}
+            />
           </div>
 
           <DialogHeader className="flex flex-col items-center space-y-3 text-center">
@@ -84,7 +92,8 @@ export function ReturnBookDialog({ book }: { book: IBorrowItem }) {
             </div>
 
             <p className="text-xs text-muted-foreground max-w-xs text-center">
-              Returning this volume will restore copy availability on the community shelf and complete your loan record.
+              Returning this volume will restore copy availability on the
+              community shelf and complete your loan record.
             </p>
           </DialogHeader>
         </div>

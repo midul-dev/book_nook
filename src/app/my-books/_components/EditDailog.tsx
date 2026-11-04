@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import {
   Dialog,
@@ -14,9 +13,10 @@ import { Pencil } from "lucide-react";
 import { IBook } from "@/types";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { jwtAuthTokenClient } from "@/lib/functions/jwt_auth_tokens/jwtAuthTokenClient";
 
 export function EditBookDialog({ book }: { book: IBook }) {
-const router = useRouter()
+  const router = useRouter();
 
   const [isOpen, setIsOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -28,12 +28,14 @@ const router = useRouter()
     const formData = new FormData(e.currentTarget);
     const updatedBook = Object.fromEntries(formData.entries());
 
-    //  PATCH API 
+    //  PATCH API
+    const token = await jwtAuthTokenClient();
     try {
       const res = await fetch(`http://localhost:5000/update-book/${book._id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(updatedBook),
       });
@@ -42,7 +44,7 @@ const router = useRouter()
       if (res.ok) {
         toast.success(data.message);
         setIsOpen(false);
-        router.refresh()
+        router.refresh();
       } else {
         toast.error(data.error);
       }

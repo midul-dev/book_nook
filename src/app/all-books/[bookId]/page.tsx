@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, BookOpen } from "lucide-react";
 import { IBook } from "@/types";
 import DetailCard from "./_components/DetailCard";
+import { jwtAuthTokenServer } from "@/lib/functions/jwt_auth_tokens/jwtAuthTokenServer";
 
 interface Props {
   params: Promise<{ bookId: string }>;
@@ -12,8 +13,13 @@ interface Props {
 export default async function BookDetailPage({ params }: Props) {
   const { bookId } = await params;
 
+  const token = await jwtAuthTokenServer()
+
   const res = await fetch(`http://localhost:5000/all-books/${bookId}`, {
     cache: "no-store",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
   });
 
   if (res.status === 404) notFound();

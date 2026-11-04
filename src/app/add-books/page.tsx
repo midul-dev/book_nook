@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useSession } from "@/lib/auth-client";
+import { jwtAuthTokenClient } from "@/lib/functions/jwt_auth_tokens/jwtAuthTokenClient";
 
 export default function AddBooksPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -29,13 +30,15 @@ export default function AddBooksPage() {
       userName: string;
       userEmail: string;
     };
-    console.log(newBook);
+
+    const token = await jwtAuthTokenClient();
 
     try {
       const res = await fetch("http://localhost:5000/add-books", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(newBook),
       });
