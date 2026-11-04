@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   BookOpen,
   Moon,
@@ -30,6 +30,7 @@ interface NavbarProps {
 }
 
 export function Navbar({ borrowCount = 2, onOpenAddBook }: NavbarProps) {
+  const router = useRouter()
   const pathname = usePathname();
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -57,6 +58,7 @@ export function Navbar({ borrowCount = 2, onOpenAddBook }: NavbarProps) {
 
   const handleSignOut = async () => {
     await signOut();
+    router.push("/")
     toast.success("Successfully signed out! Redirecting to homepage...");
     setIsProfileOpen(false);
   };
