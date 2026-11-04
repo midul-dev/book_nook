@@ -10,10 +10,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Pencil } from "lucide-react"; 
-import { IBook } from "@/types"; 
+import { Pencil } from "lucide-react";
+import { IBook } from "@/types";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
-export function EditBookDialog({ book }: { book : IBook }) {
+export function EditBookDialog({ book }: { book: IBook }) {
+const router = useRouter()
+
   const [isOpen, setIsOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
@@ -25,13 +29,29 @@ export function EditBookDialog({ book }: { book : IBook }) {
     const updatedBook = Object.fromEntries(formData.entries());
 
     // এখানে তোমার PATCH API লজিক বসাবে
-    console.log("Updated Data:", updatedBook);
+    try {
+      const res = await fetch(`http://localhost:5000/update-book/${book._id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedBook),
+      });
+      const data = await res.json();
 
-    setTimeout(() => {
+      if (res.ok) {
+        toast.success(data.message);
+        setIsOpen(false);
+        router.refresh()
+      } else {
+        toast.error(data.error);
+      }
+    } catch (error) {
+      console.error("Error updating book:", error);
+      toast.error("Network error! Please try again.");
+    } finally {
       setIsSaving(false);
-      setIsOpen(false);
-      // toast.success("Book updated successfully!");
-    }, 1000);
+    }
   };
 
   return (
@@ -55,7 +75,6 @@ export function EditBookDialog({ book }: { book : IBook }) {
         </DialogHeader>
 
         <form onSubmit={handleEdit} className="pt-4 space-y-4">
-          
           {/* Row 1: Title & Author */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
@@ -129,7 +148,9 @@ export function EditBookDialog({ book }: { book : IBook }) {
             <input
               type="url"
               name="image"
-              defaultValue={book?.image || "https://i.ibb.co/booknook/glass-botanist.png"}
+              defaultValue={
+                book?.image || "https://i.ibb.co/booknook/glass-botanist.png"
+              }
               required
               className="w-full px-3 py-2.5 rounded-lg border border-border bg-background text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-foreground transition-all"
             />
@@ -143,7 +164,10 @@ export function EditBookDialog({ book }: { book : IBook }) {
             <textarea
               name="description"
               rows={3}
-              defaultValue={book?.description || "Set in a Victorian conservatory on the Scottish coast, a young archivist uncovers a century-old ledger of rare medicinal flora that transforms her coastal village."}
+              defaultValue={
+                book?.description ||
+                "Set in a Victorian conservatory on the Scottish coast, a young archivist uncovers a century-old ledger of rare medicinal flora that transforms her coastal village."
+              }
               required
               className="w-full px-3 py-2.5 rounded-lg border border-border bg-background text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-foreground transition-all resize-none"
             />
@@ -163,7 +187,6 @@ export function EditBookDialog({ book }: { book : IBook }) {
               {isSaving ? "Saving..." : "Save Changes"}
             </button>
           </DialogFooter>
-
         </form>
       </DialogContent>
     </Dialog>
