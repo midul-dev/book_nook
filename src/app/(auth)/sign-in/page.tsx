@@ -12,13 +12,17 @@ import {
   AlertCircle,
   ShieldCheck,
   ArrowRight,
+  Loader2,
 } from "lucide-react";
 import { signIn } from "@/lib/auth-client";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 
 export default function SignInPage() {
 const router = useRouter();
+const searchParams = useSearchParams()
+const terget = searchParams.get("redirect")
+console.log(terget)
 
   const [formData, setFormData] = useState({
     email: "",
@@ -81,7 +85,7 @@ const router = useRouter();
     onSuccess: () => {
       setLoading(false);
       toast.success("Successfully signed in! Redirecting to your library shelf...")
-      router.push("/");
+      router.push(terget || "/");
     },
 
     onError: (ctx) => {
@@ -225,10 +229,20 @@ if (error) {
             {/* Submit Button */}
             <Button
               type="submit"
-              className="w-full h-11 bg-[#164e38] hover:bg-[#123e2d] text-white rounded-xl font-medium text-sm gap-2 shadow-md hover:shadow-lg transition cursor-pointer"
+              disabled={loading}
+              className="w-full h-11 bg-[#164e38] hover:bg-[#123e2d] text-white rounded-xl font-medium text-sm gap-2 shadow-md hover:shadow-lg transition cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              <span>{loading ? "Signing In..." : "Sign In to Library"}</span>
-              {(!loading) && (<ArrowRight className="w-4 h-4" />)}
+              {loading ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <span>Signing In...</span>
+                </>
+              ) : (
+                <>
+                  <span>Sign In to Library</span>
+                  <ArrowRight className="w-4 h-4" />
+                </>
+              )}
             </Button>
           </form>
 

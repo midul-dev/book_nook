@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { IBook } from "@/types"; // তোমার টাইপ অনুযায়ী
 import Image from "next/image";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Loader2 } from "lucide-react";
 import { useSession } from "@/lib/auth-client";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -191,9 +191,16 @@ export function BorrowBookDialog({ book }: { book: IBook }) {
             <button
               type="submit"
               disabled={isBorrowing}
-              className="h-10 px-4 bg-[#164e38] hover:bg-[#123e2d] text-white rounded-xl text-sm font-medium transition-colors cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
+              className="h-10 px-4 bg-[#164e38] hover:bg-[#123e2d] text-white rounded-xl text-sm font-medium transition-colors cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
-              {isBorrowing ? "Confirming..." : "Confirm Borrow"}
+              {isBorrowing ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <span>Confirming...</span>
+                </>
+              ) : (
+                <span>Confirm Borrow</span>
+              )}
             </button>
           </DialogFooter>
         </form>

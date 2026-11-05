@@ -17,6 +17,7 @@ import {
   ArrowRight,
   Sparkles,
   Image as ImageIcon,
+  Loader2,
 } from "lucide-react";
 import { authClient, signIn, signUp } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
@@ -392,17 +393,19 @@ export default function SignUpPage() {
             <Button
               type="submit"
               disabled={loading}
-              className="w-full h-11 bg-[#164e38] hover:bg-[#123e2d] text-white rounded-xl font-medium text-sm gap-2 shadow-md hover:shadow-lg transition cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
+              className="w-full h-11 bg-[#164e38] hover:bg-[#123e2d] text-white rounded-xl font-medium text-sm gap-2 shadow-md hover:shadow-lg transition cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center"
             >
-              <div>
-                {" "}
-                {loading ? (
+              {loading ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
                   <span>Signing up...</span>
-                ) : (
+                </>
+              ) : (
+                <>
                   <span>Register for BookNook</span>
-                )}{" "}
-              </div>
-              {!loading && <ArrowRight className="w-4 h-4" />}
+                  <ArrowRight className="w-4 h-4" />
+                </>
+              )}
             </Button>
           </form>
 

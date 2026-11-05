@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { jwtAuthTokenClient } from "@/lib/functions/jwt_auth_tokens/jwtAuthTokenClient";
 import { IBook } from "@/types";
-import { Trash, Trash2 } from "lucide-react";
+import { Trash, Trash2, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -87,9 +87,16 @@ export function DeleteBookDialog({ book }: { book: IBook }) {
             type="button"
             disabled={isDeleting}
             onClick={() => handleDeletemyBooks(book._id)}
-            className="w-full sm:w-36 h-10 sm:h-11 bg-[#e11d48] hover:bg-[#be123c] text-white rounded-xl font-medium cursor-pointer"
+            className="w-full sm:w-36 h-10 sm:h-11 bg-[#e11d48] hover:bg-[#be123c] text-white rounded-xl font-medium cursor-pointer flex items-center justify-center gap-2"
           >
-            {isDeleting ? "Deleting..." : "Yes, Delete"}
+            {isDeleting ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                <span>Deleting...</span>
+              </>
+            ) : (
+              <span>Yes, Delete</span>
+            )}
           </Button>
         </DialogFooter>
       </DialogContent>

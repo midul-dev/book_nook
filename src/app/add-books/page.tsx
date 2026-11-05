@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { BookCategory } from "@/types";
-import { PlusCircle, Sparkles, CheckCircle2, ArrowLeft } from "lucide-react";
+import { PlusCircle, Sparkles, CheckCircle2, ArrowLeft, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -233,12 +233,17 @@ export default function AddBooksPage() {
                   disabled={loading}
                   className="w-full h-11 bg-[#164e38] hover:bg-[#123e2d] text-white font-medium text-sm rounded-xl gap-2 shadow-md cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
                 >
-                  <Sparkles className="w-4 h-4" />
-                  <span>
-                    {loading
-                      ? "Publishing..."
-                      : "Publish Book to Library Shelf"}
-                  </span>
+                  {loading ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <span>Publishing Book to Shelf...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Sparkles className="w-4 h-4" />
+                      <span>Publish Book to Library Shelf</span>
+                    </>
+                  )}
                 </Button>
               </form>
             </>

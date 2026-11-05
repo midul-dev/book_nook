@@ -9,7 +9,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Pencil } from "lucide-react";
+import { Pencil, Loader2 } from "lucide-react";
 import { IBook } from "@/types";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -188,9 +188,16 @@ export function EditBookDialog({ book }: { book: IBook }) {
             <button
               type="submit"
               disabled={isSaving}
-              className="flex-1 sm:flex-initial h-9 sm:h-10 px-4 sm:px-5 bg-[#164e38] hover:bg-[#123e2d] text-white rounded-xl text-xs sm:text-sm font-semibold transition-colors cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
+              className="flex-1 sm:flex-initial h-9 sm:h-10 px-4 sm:px-5 bg-[#164e38] hover:bg-[#123e2d] text-white rounded-xl text-xs sm:text-sm font-semibold transition-colors cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
-              {isSaving ? "Saving..." : "Save Changes"}
+              {isSaving ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <span>Saving...</span>
+                </>
+              ) : (
+                <span>Save Changes</span>
+              )}
             </button>
           </DialogFooter>
         </form>

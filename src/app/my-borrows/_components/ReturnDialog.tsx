@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { BorrowContext } from "@/context/BorrowContext";
 import { jwtAuthTokenClient } from "@/lib/functions/jwt_auth_tokens/jwtAuthTokenClient";
-import { RotateCcw } from "lucide-react";
+import { Loader2, RotateCcw } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
 import { toast } from "sonner";
@@ -117,9 +117,16 @@ export function ReturnBookDialog({ book }: { book: IBorrowItem }) {
             type="button"
             disabled={isReturning}
             onClick={() => handleReturnBook(book._id, book.bookId)}
-            className="w-full sm:w-36 h-11 bg-amber-600 hover:bg-amber-700 text-white rounded-xl font-medium cursor-pointer"
+            className="w-full sm:w-36 h-11 bg-amber-600 hover:bg-amber-700 text-white rounded-xl font-medium cursor-pointer flex items-center justify-center gap-2"
           >
-            {isReturning ? "Returning..." : "Yes, Return"}
+            {isReturning ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                <span>Returning...</span>
+              </>
+            ) : (
+              "Yes, Return"
+            )}
           </Button>
         </DialogFooter>
       </DialogContent>
