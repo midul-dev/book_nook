@@ -16,9 +16,9 @@ import {
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperType } from "swiper";
 import { Autoplay, Pagination, EffectFade } from "swiper/modules";
-import bookSelf from "@/assets/book_self.avif";
-import bigBook from "@/assets/book.avif";
-import openLib from "@/assets/Open_Lib.avif";
+import bookSelf from "@/assets/book_self.webp";
+import bigBook from "@/assets/book.webp";
+import openLib from "@/assets/Open_Lib.webp";
 
 import "swiper/css";
 import "swiper/css/pagination";

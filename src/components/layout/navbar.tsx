@@ -55,11 +55,11 @@ export function Navbar() {
     setIsProfileOpen(false);
   };
 
-  const publicRoute = [
+  const publicRoute: Array<{ name: string; href: string; badge?: number }> = [
     { name: "Home", href: "/" },
     { name: "All Books", href: "/all-books" },
   ];
-  const privateRoute = [
+  const privateRoute: Array<{ name: string; href: string; badge?: number }> = [
     { name: "Add Book", href: "/add-books" },
     { name: "My Books", href: "/my-books" },
     { name: "My Borrows", href: "/my-borrows", badge: borrowCount },
