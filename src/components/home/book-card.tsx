@@ -22,14 +22,15 @@ export function BookCard({ book }: BookCardProps) {
     <Link href={`/all-books/${book._id}`} className="group">
       <article className="group flex flex-col h-full justify-between rounded-2xl bg-card p-3 sm:p-4 border border-border shadow-xs hover:shadow-xl hover:border-emerald-600/30 transition-all duration-300">
         {/* 1. Equal-size picture container with guaranteed height & aspect ratio */}
-        <div className="relative w-full aspect-[4/5] sm:aspect-auto sm:h-72 overflow-hidden rounded-xl bg-muted/40 shadow-xs">
+        {/* 1. Full book view without cropping */}
+        <div className="relative w-full aspect-[3/4] overflow-hidden rounded-xl bg-muted/30 p-2 shadow-xs flex items-center justify-center">
           {book.image ? (
             <Image
               src={book.image}
               alt={book.title}
               fill
-              sizes="(max-width: 640px) 90vw, (max-width: 1024px) 50vw, 33vw"
-              className="object-cover object-center transition-transform duration-300 group-hover:scale-105"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              className="object-contain transition-transform duration-300 group-hover:scale-105"
             />
           ) : (
             <div className="w-full h-full flex flex-col items-center justify-center bg-muted/60 text-muted-foreground p-4 text-center">

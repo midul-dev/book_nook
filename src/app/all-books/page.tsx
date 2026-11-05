@@ -9,11 +9,13 @@ export const metadata: Metadata = {
 };
 
 export default async function AllBooksPage() {
+
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/all-books`,{
     cache: "no-store",
   });
+  
   const books = await res.json();
-  console.log("Fetched books:", books);
+ 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground transition-colors">
       <main className="flex-1 max-w-7xl mx-auto w-full px-3 sm:px-6 lg:px-8 py-6 sm:py-12 md:py-16">

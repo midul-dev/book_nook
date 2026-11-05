@@ -15,12 +15,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const token = await jwtAuthTokenServer();
   const { bookId } = await params;
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/all-books/${bookId}`, {
-      cache: "no-store",
-      headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/all-books/${bookId}`,
+      {
+        cache: "no-store",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
     if (res.ok) {
       const book = await res.json();
       if (book?.title) {
@@ -42,17 +45,20 @@ export default async function BookDetailPage({ params }: Props) {
 
   const token = await jwtAuthTokenServer();
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/all-books/${bookId}`, {
-    cache: "no-store",
-    headers: {
-      Authorization: `Bearer ${token}`,
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/all-books/${bookId}`,
+    {
+      cache: "no-store",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     },
-  });
+  );
 
   if (res.status === 404) notFound();
 
   if (!res.ok) {
-    throw new Error("Failed to fetch book");
+    notFound();
   }
 
   const book: IBook = await res.json();
