@@ -70,10 +70,7 @@ export function EditBookDialog({ book }: { book: IBook }) {
       {/* Modal Content */}
       <DialogContent className="w-[94vw] max-w-[480px] sm:max-w-[500px] rounded-2xl sm:rounded-[1.5rem] p-4 sm:p-6 border border-border shadow-2xl bg-card max-h-[88dvh] flex flex-col my-auto">
         <DialogHeader className="text-left space-y-0 pb-2.5 sm:pb-3 border-b border-border/60 shrink-0">
-          {/* API Tag (Dark Green Text) */}
-          <div className="text-[10px] font-bold text-[#164e38] dark:text-emerald-400 tracking-widest uppercase mb-0.5">
-            PATCH /BOOKS/:ID • PRE-FILLED FORM
-          </div>
+       
           {/* Title */}
           <DialogTitle className="font-serif text-lg sm:text-2xl font-bold tracking-tight text-foreground">
             Edit Book Information
