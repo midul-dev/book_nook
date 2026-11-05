@@ -41,19 +41,19 @@ export default async function MyBorrowsPage() {
     <div className="min-h-screen bg-background text-foreground transition-colors">
       <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
         {/* Page Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-border">
-          <div className="space-y-2">
-            <h1 className="text-3xl sm:text-4xl font-bold text-foreground tracking-tight">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 sm:gap-6 pb-6 sm:pb-8 border-b border-border">
+          <div className="space-y-1.5 sm:space-y-2">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground tracking-tight">
               My Borrowed Books
             </h1>
-            <p className="text-muted-foreground text-sm max-w-2xl">
+            <p className="text-muted-foreground text-xs sm:text-sm max-w-2xl">
               Volumes currently checked out to your profile. Track return
               deadlines and return finished volumes to the shelf.
             </p>
           </div>
 
-          <Link href="/all-books">
-            <Button className="self-start md:self-end bg-[#164e38] hover:bg-[#123e2d] text-white gap-1.5 h-10 px-4 rounded-xl cursor-pointer">
+          <Link href="/all-books" className="w-full sm:w-auto">
+            <Button className="w-full sm:w-auto bg-[#164e38] hover:bg-[#123e2d] text-white gap-1.5 h-10 px-4 rounded-xl cursor-pointer">
               <BookOpen className="w-4 h-4" />
               <span>Browse All Books</span>
             </Button>
@@ -61,29 +61,25 @@ export default async function MyBorrowsPage() {
         </div>
 
         {/* Borrows Content */}
-        <div className="py-8">
+        <div className="py-6 sm:py-8">
           {hasBorrows ? (
-            <div className="bg-card rounded-3xl border border-border/80 shadow-xs overflow-hidden">
-              <div className="overflow-x-auto">
-                <div className="min-w-[820px]">
-                  {/* Table Header Row */}
-                  <div className="grid grid-cols-12 items-center px-6 py-4.5 border-b border-border/70 text-[11px] font-semibold text-muted-foreground uppercase tracking-wider select-none">
-                    <div className="col-span-4">COVER & TITLE</div>
-                    <div className="col-span-2">AUTHOR</div>
-                    <div className="col-span-2">CATEGORY</div>
-                    <div className="col-span-2 text-center">RETURN DATE</div>
-                    <div className="col-span-2 text-right">
-                      ACTIONS [RETURN BOOK]
-                    </div>
-                  </div>
-
-                  {/* Borrow Rows */}
-                  <div className="divide-y divide-border/60">
-                    {borrowedBooks.map((book) => (
-                      <MyBorrowRow key={book._id} book={book} />
-                    ))}
-                  </div>
+            <div className="bg-card rounded-2xl sm:rounded-3xl border border-border/80 shadow-xs overflow-hidden">
+              {/* Desktop Table Header */}
+              <div className="hidden md:grid grid-cols-12 items-center px-6 py-4 border-b border-border/70 text-[11px] font-semibold text-muted-foreground uppercase tracking-wider select-none">
+                <div className="col-span-4">COVER & TITLE</div>
+                <div className="col-span-2">AUTHOR</div>
+                <div className="col-span-2">CATEGORY</div>
+                <div className="col-span-2 text-center">RETURN DATE</div>
+                <div className="col-span-2 text-right">
+                  ACTIONS
                 </div>
+              </div>
+
+              {/* Borrow Rows */}
+              <div className="divide-y divide-border/60">
+                {borrowedBooks.map((book) => (
+                  <MyBorrowRow key={book._id} book={book} />
+                ))}
               </div>
             </div>
           ) : (

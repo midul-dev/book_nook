@@ -73,24 +73,24 @@ export function ReturnBookDialog({ book }: { book: IBorrowItem }) {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger className="cursor-pointer">Return</DialogTrigger>
+      <DialogTrigger className="cursor-pointer inline-flex items-center">Return</DialogTrigger>
 
-      <DialogContent className="sm:max-w-md rounded-[2rem] p-6 sm:p-10 border-0 shadow-2xl bg-card">
+      <DialogContent className="w-[94vw] sm:max-w-md rounded-2xl sm:rounded-[2rem] p-5 sm:p-8 border border-border shadow-2xl bg-card">
         <div className="flex flex-col items-center justify-center">
           {/* Rotate / Return Icon */}
-          <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-amber-100 dark:bg-amber-950/50">
+          <div className="mb-4 sm:mb-5 flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl bg-amber-100 dark:bg-amber-950/50">
             <RotateCcw
-              className="h-7 w-7 text-amber-700 dark:text-amber-400"
+              className="h-6 w-6 sm:h-7 sm:w-7 text-amber-700 dark:text-amber-400"
               strokeWidth={2.5}
             />
           </div>
 
-          <DialogHeader className="flex flex-col items-center space-y-3 text-center">
-            <DialogTitle className="font-serif text-2xl font-bold tracking-tight text-foreground">
+          <DialogHeader className="flex flex-col items-center space-y-2 sm:space-y-3 text-center">
+            <DialogTitle className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-foreground">
               Return Book to Library?
             </DialogTitle>
 
-            <div className="text-[15px] font-semibold text-[#8a4b08] dark:text-amber-400">
+            <div className="text-sm sm:text-[15px] font-semibold text-[#8a4b08] dark:text-amber-400">
               {`${book.title} by ${book.author}`}
             </div>
 
@@ -101,12 +101,12 @@ export function ReturnBookDialog({ book }: { book: IBorrowItem }) {
           </DialogHeader>
         </div>
 
-        <DialogFooter className="mt-8 flex-col sm:flex-row sm:justify-center gap-3 sm:gap-4 w-full">
+        <DialogFooter className="mt-5 sm:mt-8 pt-0 border-0 bg-transparent mx-0 mb-0 p-0 flex flex-col sm:flex-row justify-center sm:justify-center items-center gap-2.5 sm:gap-4 w-full">
           <DialogClose
             render={
               <Button
                 variant="outline"
-                className="w-full sm:w-36 h-11 border-[#164e38] text-[#164e38] hover:bg-[#164e38]/10 hover:text-[#164e38] rounded-xl font-medium cursor-pointer"
+                className="w-full sm:w-36 h-11 border-[#164e38] text-[#164e38] dark:border-emerald-500/40 dark:text-emerald-300 hover:bg-[#164e38]/10 rounded-xl font-medium cursor-pointer"
               >
                 Keep Reading
               </Button>

@@ -16,6 +16,7 @@ import { useSession } from "@/lib/auth-client";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { BorrowContext } from "@/context/BorrowContext";
+import { jwtAuthTokenClient } from "@/lib/functions/jwt_auth_tokens/jwtAuthTokenClient";
 
 export function BorrowBookDialog({ book }: { book: IBook }) {
   const router = useRouter();
@@ -51,11 +52,13 @@ export function BorrowBookDialog({ book }: { book: IBook }) {
     };
 
     //  POST API
+   const token = await jwtAuthTokenClient();
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/add-borrow`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(borrowBooks),
       });
@@ -78,27 +81,27 @@ export function BorrowBookDialog({ book }: { book: IBook }) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       {/* Trigger Button */}
-      <DialogTrigger className="inline-flex items-center w-full justify-center rounded-md text-sm font-medium bg-[#164e38] text-white hover:bg-[#123e2d] h-9 px-4 py-2 transition-colors cursor-pointer shadow-sm">
+      <DialogTrigger className="inline-flex items-center w-full justify-center rounded-xl text-sm font-medium bg-[#164e38] text-white hover:bg-[#123e2d] h-11 sm:h-10 px-4 py-2 transition-colors cursor-pointer shadow-sm">
         Borrow This Book
         <ArrowUpRight className="ml-2 h-4 w-4" />
       </DialogTrigger>
 
       {/* Modal Content */}
-      <DialogContent className="sm:max-w-[425px] rounded-[1.5rem] p-6 border-0 shadow-2xl bg-white">
-        <DialogHeader className="text-left space-y-0 pb-4 border-b border-border/60">
+      <DialogContent className="w-[94vw] sm:max-w-[440px] rounded-2xl sm:rounded-[1.5rem] p-4 sm:p-6 border border-border shadow-2xl bg-card">
+        <DialogHeader className="text-left space-y-0 pb-3 sm:pb-4 border-b border-border/60">
           {/* API Tag (Orange Text) */}
           <div className="text-[10px] font-bold text-amber-600 tracking-widest uppercase mb-1">
             POST /BORROWS • $INC: -1
           </div>
           {/* Title */}
-          <DialogTitle className="font-serif text-2xl font-bold tracking-tight text-foreground">
+          <DialogTitle className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-foreground">
             Borrow This Book
           </DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleBorrow} className="pt-4 space-y-5">
+        <form onSubmit={handleBorrow} className="pt-3 sm:pt-4 space-y-4 sm:space-y-5">
           {/* Book Info Card */}
-          <div className="flex items-center gap-3.5 bg-[#fcfbf9] border border-border/60 rounded-xl p-3.5 shadow-sm">
+          <div className="flex items-center gap-3.5 bg-muted/40 border border-border/60 rounded-xl p-3 sm:p-3.5 shadow-sm">
             <div className="relative h-14 w-11 shrink-0 overflow-hidden rounded bg-muted shadow-sm">
               <Image
                 src={book?.image || "/placeholder-book.jpg"}
@@ -107,21 +110,21 @@ export function BorrowBookDialog({ book }: { book: IBook }) {
                 className="object-cover"
               />
             </div>
-            <div className="flex flex-col">
-              <span className="text-sm font-bold text-foreground leading-tight">
+            <div className="flex flex-col min-w-0">
+              <span className="text-sm font-bold text-foreground leading-tight truncate">
                 {book?.title || "Letters from the Observatory"}
               </span>
-              <span className="text-xs text-muted-foreground mt-0.5">
+              <span className="text-xs text-muted-foreground mt-0.5 truncate">
                 by {book?.author || "Miriam Al-Mansoor"}
               </span>
-              <span className="text-[11px] font-semibold text-[#164e38] mt-1">
+              <span className="text-[11px] font-semibold text-emerald-800 dark:text-emerald-400 mt-1">
                 {book?.copies || 3} copies currently on shelf
               </span>
             </div>
           </div>
 
           {/* Form Fields */}
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             {/* Name Field */}
             <div className="space-y-1.5">
               <label className="text-[10px] uppercase font-semibold tracking-wider text-muted-foreground">
@@ -132,7 +135,7 @@ export function BorrowBookDialog({ book }: { book: IBook }) {
                 name="userName"
                 readOnly
                 value={user?.name || "Unknown User"}
-                className="w-full px-3 py-2.5 rounded-lg border border-border/80 bg-muted/30 text-sm text-foreground focus:outline-none cursor-not-allowed"
+                className="w-full px-3 py-2 sm:py-2.5 rounded-lg border border-border/80 bg-muted/30 text-sm text-foreground focus:outline-none cursor-not-allowed"
               />
             </div>
 
@@ -146,12 +149,12 @@ export function BorrowBookDialog({ book }: { book: IBook }) {
                 name="userEmail"
                 readOnly
                 value={user?.email || "Unknown"}
-                className="w-full px-3 py-2.5 rounded-lg border border-border/80 bg-muted/30 text-sm font-mono text-muted-foreground focus:outline-none cursor-not-allowed"
+                className="w-full px-3 py-2 sm:py-2.5 rounded-lg border border-border/80 bg-muted/30 text-sm font-mono text-muted-foreground focus:outline-none cursor-not-allowed"
               />
             </div>
 
             {/* Dates Row */}
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 min-[420px]:grid-cols-2 gap-3">
               <div className="space-y-1.5">
                 <label className="text-[10px] uppercase font-semibold tracking-wider text-muted-foreground">
                   Borrow Date
@@ -161,7 +164,7 @@ export function BorrowBookDialog({ book }: { book: IBook }) {
                   name="borrowDate"
                   readOnly
                   value={borrowDateStr}
-                  className="w-full px-3 py-2.5 rounded-lg border border-border/80 bg-muted/30 text-sm text-foreground focus:outline-none cursor-not-allowed font-mono"
+                  className="w-full px-3 py-2 sm:py-2.5 rounded-lg border border-border/80 bg-muted/30 text-sm text-foreground focus:outline-none cursor-not-allowed font-mono"
                 />
               </div>
 
@@ -173,14 +176,14 @@ export function BorrowBookDialog({ book }: { book: IBook }) {
                   type="date"
                   name="returnDate"
                   required
-                  className="w-full px-3 py-2.5 rounded-lg border border-border bg-background text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-[#164e38] transition-all font-mono"
+                  className="w-full px-3 py-2 sm:py-2.5 rounded-lg border border-border bg-background text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-[#164e38] transition-all font-mono"
                 />
               </div>
             </div>
           </div>
 
           {/* Action Buttons */}
-          <DialogFooter className="pt-2 flex flex-row justify-end gap-2 w-full sm:space-x-0">
+          <DialogFooter className="pt-2 flex flex-col-reverse sm:flex-row justify-end gap-2 w-full sm:space-x-0 [&>*]:w-full sm:[&>*]:w-auto">
             <DialogClose className="h-10 px-4 border border-[#164e38] text-[#164e38] hover:bg-[#164e38]/5 rounded-xl text-sm font-medium transition-colors cursor-pointer flex items-center justify-center">
               Cancel
             </DialogClose>

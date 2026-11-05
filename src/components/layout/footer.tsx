@@ -6,8 +6,8 @@ import { BookOpen, MapPin, Mail, Phone, MessageSquare } from "lucide-react";
 export function Footer() {
   return (
     <footer className="w-full bg-[#0d1217] text-stone-300 border-t border-stone-800 transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 md:py-16">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 sm:gap-10 lg:gap-12">
           {/* Brand Info & Mission */}
           <div className="md:col-span-5 space-y-4">
             <div className="flex items-center gap-3">
@@ -150,12 +150,12 @@ export function Footer() {
         </div>
 
         {/* Bottom Sub-footer */}
-        <div className="mt-12 pt-8 border-t border-stone-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-stone-400 font-mono">
+        <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-stone-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-stone-400 font-mono text-center sm:text-left">
           <p>
             © 2026 BookNook Online Library. All rights reserved. Built with
             Next.js App Router, BetterAuth, Express & MongoDB
           </p>
-          <div className="flex items-center gap-2 text-stone-400">
+          <div className="flex flex-wrap items-center justify-center sm:justify-end gap-2 text-stone-400">
             <span>SPA Reload-Safe</span>
             <span>•</span>
             <span className="text-emerald-400">JWT Verified</span>

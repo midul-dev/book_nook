@@ -22,13 +22,13 @@ export function BookCard({ book }: BookCardProps) {
     <Link href={`/all-books/${book._id}`} className="group">
       <article className="group flex flex-col h-full justify-between rounded-2xl bg-card p-3 sm:p-4 border border-border shadow-xs hover:shadow-xl hover:border-emerald-600/30 transition-all duration-300">
         {/* 1. Equal-size picture container with guaranteed height & aspect ratio */}
-        <div className=" sm:h-72 overflow-hidden rounded-xl bg-muted/40 shadow-xs">
+        <div className="relative w-full aspect-[4/5] sm:aspect-auto sm:h-72 overflow-hidden rounded-xl bg-muted/40 shadow-xs">
           {book.image ? (
             <Image
               src={book.image}
               alt={book.title}
-              height={640}
-              width={640}
+              fill
+              sizes="(max-width: 640px) 90vw, (max-width: 1024px) 50vw, 33vw"
               className="object-cover object-center transition-transform duration-300 group-hover:scale-105"
             />
           ) : (
@@ -45,7 +45,7 @@ export function BookCard({ book }: BookCardProps) {
         </div>
 
         {/* 2. Unified metadata, title & author with consistent vertical positions */}
-        <div className="pt-4 pb-2 flex-1 flex flex-col justify-between">
+        <div className="pt-3 sm:pt-4 pb-1 sm:pb-2 flex-1 flex flex-col justify-between">
           <div className="space-y-1.5">
             {/* Category row */}
             <div className="flex items-center justify-between text-[11px] font-mono text-muted-foreground h-5">
@@ -73,18 +73,18 @@ export function BookCard({ book }: BookCardProps) {
               >
                 by {book.author}
               </p>
-              <p className="text-xs text-muted-foreground mt-3">
+              <p className="text-xs text-muted-foreground mt-2 sm:mt-3">
                 {catalogedDate}
               </p>
             </div>
           </div>
 
           {/* 3. Action Button pinned to bottom */}
-          <div className="pt-4 mt-auto">
-            <button className="w-full flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-[#164e38] hover:bg-[#123e2d] active:scale-98 text-white text-xs sm:text-sm font-medium transition-all shadow-sm hover:shadow-md cursor-pointer">
+          <div className="pt-3 sm:pt-4 mt-auto">
+            <span className="w-full flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-[#164e38] group-hover:bg-[#123e2d] active:scale-98 text-white text-xs sm:text-sm font-medium transition-all shadow-sm group-hover:shadow-md">
               <span>View Details</span>
               <ChevronRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
-            </button>
+            </span>
           </div>
         </div>
       </article>

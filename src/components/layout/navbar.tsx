@@ -65,27 +65,27 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-40 w-full bg-background/95 backdrop-blur-md border-b border-border transition-colors duration-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 sm:h-18 flex items-center justify-between gap-2 sm:gap-4">
         {/* Brand Logo */}
         <Link
           href="/"
-          className="flex items-center gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 rounded-lg p-1"
+          className="flex items-center gap-2 sm:gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 rounded-lg p-1 shrink-0"
         >
-          <div className="h-10 w-10 rounded-xl bg-emerald-800 text-white flex items-center justify-center shadow-md shadow-emerald-950/20 group-hover:bg-emerald-700 transition-colors">
-            <BookOpen className="h-5 w-5 stroke-[2.2]" />
+          <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-xl bg-emerald-800 text-white flex items-center justify-center shadow-md shadow-emerald-950/20 group-hover:bg-emerald-700 transition-colors">
+            <BookOpen className="h-4 w-4 sm:h-5 sm:w-5 stroke-[2.2]" />
           </div>
           <div className="flex flex-col">
-            <span className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-foreground leading-none">
+            <span className="font-serif text-lg sm:text-2xl font-bold tracking-tight text-foreground leading-none">
               BookNook
             </span>
-            <span className="text-[9px] font-semibold tracking-[0.2em] uppercase text-muted-foreground mt-0.5">
+            <span className="hidden min-[360px]:inline-block text-[9px] font-semibold tracking-[0.2em] uppercase text-muted-foreground mt-0.5">
               Community Library
             </span>
           </div>
         </Link>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-1.5 p-1 rounded-full bg-muted/70 border border-border/80">
+        <nav className="hidden md:flex items-center gap-0.5 lg:gap-1.5 p-1 rounded-full bg-muted/70 border border-border/80">
           {navItems.map((item) => {
             const isActive =
               item.href === "/"
@@ -96,7 +96,7 @@ export function Navbar() {
               <Link
                 key={item.name}
                 href={item.href}
-                className={`relative px-4 py-1.5 rounded-full text-xs font-medium transition-all flex items-center gap-1.5 ${
+                className={`relative px-2.5 lg:px-4 py-1.5 rounded-full text-xs font-medium transition-all flex items-center gap-1.5 ${
                   isActive
                     ? "bg-background text-foreground shadow-xs font-semibold"
                     : "text-muted-foreground hover:text-foreground hover:bg-background/50"
@@ -120,12 +120,12 @@ export function Navbar() {
         </nav>
 
         {/* Right Tools (Theme Toggle, Profile, Quick Actions) */}
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-1.5 sm:gap-2.5">
           {/* Dark Mode Switcher */}
           <button
             onClick={toggleDarkMode}
             aria-label="Toggle color theme"
-            className="h-8 w-8 rounded-full flex items-center justify-center border border-border bg-card hover:bg-muted text-muted-foreground hover:text-foreground transition-all shadow-2xs cursor-pointer"
+            className="h-8 w-8 rounded-full flex items-center justify-center border border-border bg-card hover:bg-muted text-muted-foreground hover:text-foreground transition-all shadow-2xs cursor-pointer shrink-0"
           >
             {isDarkMode ? (
               <Sun className="h-4 w-4 text-amber-400" />
@@ -152,25 +152,25 @@ export function Navbar() {
             <div className="relative">
               <button
                 onClick={() => setIsProfileOpen(!isProfileOpen)}
-                className="flex items-center gap-2 pl-1.5 pr-2.5 py-1 rounded-full border border-border bg-card hover:bg-muted/80 transition-all text-xs font-medium cursor-pointer"
+                className="flex items-center gap-1.5 sm:gap-2 pl-1 sm:pl-1.5 pr-2 sm:pr-2.5 py-1 rounded-full border border-border bg-card hover:bg-muted/80 transition-all text-xs font-medium cursor-pointer"
               >
-                <div className="h-6 w-6 rounded-full bg-[#1b2533] text-white flex items-center justify-center text-[10px] font-bold ring-1 ring-border">
+                <div className="h-6 w-6 rounded-full bg-[#1b2533] text-white flex items-center justify-center text-[10px] font-bold ring-1 ring-border shrink-0">
                   {user?.image ? (
                     <Image
                       src={user.image}
                       alt={user.name || "Profile"}
-                      height={6}
-                      width={6}
+                      height={24}
+                      width={24}
                       className="h-full w-full object-cover rounded-full"
                     />
                   ) : (
                     <span>{user?.name?.charAt(0)?.toUpperCase() || "U"}</span>
                   )}
                 </div>
-                <span className="hidden sm:inline-block text-foreground font-medium text-xs">
+                <span className="hidden sm:inline-block text-foreground font-medium text-xs max-w-[100px] truncate">
                   {user.name}
                 </span>
-                <ChevronDown className="h-3 w-3 text-muted-foreground" />
+                <ChevronDown className="h-3 w-3 text-muted-foreground shrink-0" />
               </button>
 
               {/* Profile Dropdown */}
@@ -206,12 +206,12 @@ export function Navbar() {
               )}
             </div>
           ) : (
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-1 sm:gap-1.5">
               <Link href="/sign-in">
                 <Button
                   variant="outline"
                   size="sm"
-                  className="h-8 px-2.5 text-xs font-medium border-border hover:bg-muted text-foreground cursor-pointer"
+                  className="h-8 px-2 sm:px-2.5 text-xs font-medium border-border hover:bg-muted text-foreground cursor-pointer"
                 >
                   Sign In
                 </Button>
@@ -219,7 +219,7 @@ export function Navbar() {
               <Link href="/sign-up">
                 <Button
                   size="sm"
-                  className="h-8 px-3 text-xs font-medium bg-[#164e38] hover:bg-[#123e2d] text-white rounded-lg cursor-pointer"
+                  className="h-8 px-2.5 sm:px-3 text-xs font-medium bg-[#164e38] hover:bg-[#123e2d] text-white rounded-lg cursor-pointer"
                 >
                   Sign Up
                 </Button>
@@ -231,7 +231,7 @@ export function Navbar() {
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
-            className="md:hidden h-8 w-8 rounded-lg flex items-center justify-center border border-border text-foreground hover:bg-muted"
+            className="md:hidden h-8 w-8 rounded-lg flex items-center justify-center border border-border text-foreground hover:bg-muted cursor-pointer shrink-0"
           >
             {isMobileMenuOpen ? (
               <X className="h-4 w-4" />
@@ -244,7 +244,7 @@ export function Navbar() {
 
       {/* Mobile Drawer */}
       {isMobileMenuOpen && (
-        <div className="md:hidden border-t border-border bg-card px-4 pt-3 pb-4 space-y-1">
+        <div className="md:hidden border-t border-border bg-card px-4 pt-3 pb-5 space-y-1.5 shadow-lg animate-in slide-in-from-top-2 duration-150">
           {navItems.map((item) => {
             const isActive =
               item.href === "/"
@@ -256,7 +256,7 @@ export function Navbar() {
                 key={item.name}
                 href={item.href}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition ${
+                className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition ${
                   isActive
                     ? "bg-muted text-foreground font-semibold"
                     : "text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -271,6 +271,30 @@ export function Navbar() {
               </Link>
             );
           })}
+
+          {/* Mobile Drawer User / Auth shortcuts */}
+          {user && (
+            <div className="pt-2 mt-2 border-t border-border flex flex-col gap-1">
+              <Link
+                href="/user-profile"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="w-full flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground"
+              >
+                <User className="w-4 h-4 text-amber-500" />
+                <span>My Profile ({user.name})</span>
+              </Link>
+              <button
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  handleSignOut();
+                }}
+                className="w-full flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-sm font-medium text-destructive hover:bg-destructive/10 text-left cursor-pointer"
+              >
+                <LogOut className="w-4 h-4" />
+                <span>Sign Out</span>
+              </button>
+            </div>
+          )}
         </div>
       )}
     </header>

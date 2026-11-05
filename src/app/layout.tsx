@@ -30,13 +30,13 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body
-        className={`${openSans.className} min-h-full flex flex-col bg-background text-foreground selection:bg-amber-200 selection:text-amber-950`}
+        className={`${openSans.className} min-h-screen flex flex-col bg-background text-foreground selection:bg-amber-200 selection:text-amber-950 overflow-x-hidden`}
       >
         <BorrowProvider>
-        <Navbar />
-        <main>{children}</main>
-        <Footer/>
-        <Toaster position="top-center" />
+          <Navbar />
+          <main className="flex-1 flex flex-col w-full">{children}</main>
+          <Footer />
+          <Toaster position="top-center" />
         </BorrowProvider>
       </body>
     </html>

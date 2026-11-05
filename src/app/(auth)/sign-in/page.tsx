@@ -102,17 +102,17 @@ if (error) {
   }
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12 relative overflow-hidden bg-background">
+    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-3 sm:px-4 py-8 sm:py-12 relative overflow-hidden bg-background">
       {/* Subtle atmospheric ambient glow matching BookNook theme */}
-      <div className="pointer-events-none absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[480px] bg-gradient-to-tr from-emerald-600/15 via-emerald-800/10 to-amber-500/10 blur-3xl opacity-70 -z-10" />
+      <div className="pointer-events-none absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] sm:w-[520px] h-[320px] sm:h-[480px] bg-gradient-to-tr from-emerald-600/15 via-emerald-800/10 to-amber-500/10 blur-3xl opacity-70 -z-10" />
 
       <div className="w-full max-w-md">
         {/* Brand Card */}
-        <div className="bg-card border border-border rounded-3xl p-6 sm:p-8 shadow-2xl backdrop-blur-xs relative">
+        <div className="bg-card border border-border rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-2xl backdrop-blur-xs relative">
           {/* Header */}
-          <div className="text-center space-y-2.5 pb-6">
-            <div className="inline-flex items-center justify-center h-12 w-12 rounded-2xl bg-emerald-900/10 dark:bg-emerald-400/10 border border-emerald-900/20 dark:border-emerald-400/20 text-[#164e38] dark:text-emerald-400 mb-1">
-              <BookOpen className="w-6 h-6" />
+          <div className="text-center space-y-2 pb-5 sm:pb-6">
+            <div className="inline-flex items-center justify-center h-11 w-11 sm:h-12 sm:w-12 rounded-2xl bg-emerald-900/10 dark:bg-emerald-400/10 border border-emerald-900/20 dark:border-emerald-400/20 text-[#164e38] dark:text-emerald-400 mb-1">
+              <BookOpen className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
             <h1 className="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
               Welcome Back
@@ -153,7 +153,7 @@ if (error) {
                   placeholder="you@example.com"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-border bg-background text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-border bg-background text-base sm:text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition"
                 />
               </div>
             </div>
@@ -184,7 +184,7 @@ if (error) {
                   placeholder="Enter your password"
                   value={formData.password}
                   onChange={handleChange}
-                  className={`w-full pl-10 pr-10 py-2.5 rounded-xl border bg-background text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 transition ${
+                  className={`w-full pl-10 pr-10 py-2.5 rounded-xl border bg-background text-base sm:text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 transition ${
                     passwordError
                       ? "border-destructive focus:ring-destructive/50"
                       : "border-border focus:ring-emerald-500/50"

@@ -35,39 +35,39 @@ export default async function BookDetailPage({ params }: Props) {
   const totalCopies = Number(book.copies) || 0;
 
   return (
-    <main className="min-h-screen bg-[#fafaf9] px-4 py-10 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#fafaf9] dark:bg-background px-3 sm:px-6 lg:px-8 py-6 sm:py-10">
       <div className="mx-auto max-w-6xl">
         {/* Back Navigation */}
         <Link
-          href="/books"
-          className="group mb-6 inline-flex items-center gap-2 text-sm font-medium text-stone-500 transition-colors hover:text-emerald-800"
+          href="/all-books"
+          className="group mb-4 sm:mb-6 inline-flex items-center gap-2 text-xs sm:text-sm font-medium text-stone-500 hover:text-emerald-800 transition-colors"
         >
           <ArrowLeft
             size={17}
             className="transition-transform group-hover:-translate-x-1"
           />
-          Back to Library
+          Back to All Books
         </Link>
 
         {/* Main Book Card */}
         <DetailCard book={book} totalCopies={totalCopies} />
 
         {/* Bottom Message */}
-        <div className="mt-10 flex flex-col items-center text-center">
-          <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-emerald-100 text-emerald-800">
-            <BookOpen size={21} />
+        <div className="mt-8 sm:mt-12 flex flex-col items-center text-center px-4">
+          <div className="mb-3 flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300">
+            <BookOpen size={20} />
           </div>
 
-          <h2 className="font-serif text-xl font-bold text-stone-800">
+          <h2 className="font-serif text-lg sm:text-xl font-bold text-foreground">
             Happy Reading!
           </h2>
 
-          <p className="mt-2 max-w-md text-sm leading-6 text-stone-500">
+          <p className="mt-1.5 sm:mt-2 max-w-md text-xs sm:text-sm leading-relaxed text-muted-foreground">
             Every book is an opportunity to discover something new. Find your
             next favorite story at BookNook.
           </p>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

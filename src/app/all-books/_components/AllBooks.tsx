@@ -33,17 +33,17 @@ const AllBooks = ({ books }: { books: IBook[] }) => {
   return (
     <div>
       {/* Filter & Search Bar */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-6">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4 py-4 sm:py-6">
         {/* Category Tabs */}
-        <div className="flex items-center gap-2 overflow-x-auto w-full sm:w-auto pb-2 sm:pb-0 scrollbar-none">
-          <span className="text-xs font-mono text-muted-foreground flex items-center gap-1 mr-1">
+        <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-2 sm:pb-0 scrollbar-none -mx-1 px-1 sm:mx-0 sm:px-0">
+          <span className="text-xs font-mono text-muted-foreground flex items-center gap-1 mr-1 shrink-0">
             <Filter className="w-3.5 h-3.5" /> Filter:
           </span>
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition whitespace-nowrap cursor-pointer ${
+              className={`px-3 py-1.5 rounded-full text-xs font-medium transition whitespace-nowrap cursor-pointer shrink-0 ${
                 selectedCategory === cat
                   ? "bg-emerald-900 text-white dark:bg-emerald-800 shadow-sm"
                   : "bg-muted/70 text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -55,20 +55,20 @@ const AllBooks = ({ books }: { books: IBook[] }) => {
         </div>
 
         {/* Search Input */}
-        <div className="relative w-full sm:w-72">
+        <div className="relative w-full sm:w-72 shrink-0">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Input
             type="text"
             placeholder="Search title, Author..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="pl-9 h-10 rounded-xl"
+            className="pl-9 h-10 rounded-xl text-sm"
           />
         </div>
       </div>
 
       {/* Book Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
         {filteredBooks.map((book) => (
           <BookCard key={book._id} book={book} />
         ))}

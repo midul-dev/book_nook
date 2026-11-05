@@ -75,8 +75,8 @@ export default function UserProfilePage() {
     : "Recent Reader";
 
   return (
-    <div className="min-h-[calc(100vh-4.5rem)] bg-background text-foreground transition-colors py-10 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto space-y-6">
+    <div className="min-h-[calc(100vh-4.5rem)] bg-background text-foreground transition-colors py-6 sm:py-10 px-3 sm:px-6 lg:px-8">
+      <div className="max-w-3xl mx-auto space-y-4 sm:space-y-6">
         {/* Navigation Breadcrumb */}
         <div className="flex items-center justify-between">
           <Link
@@ -96,9 +96,9 @@ export default function UserProfilePage() {
 
         {/* Loading Skeleton */}
         {isPending ? (
-          <div className="bg-card border border-border rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
-            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
-              <Skeleton className="w-24 h-24 rounded-full shrink-0" />
+          <div className="bg-card border border-border rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-sm space-y-6">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6">
+              <Skeleton className="w-20 h-20 sm:w-24 sm:h-24 rounded-full shrink-0" />
               <div className="space-y-3 w-full text-center sm:text-left">
                 <Skeleton className="h-7 w-48 mx-auto sm:mx-0 rounded-lg" />
                 <Skeleton className="h-4 w-64 mx-auto sm:mx-0 rounded-md" />
@@ -115,22 +115,22 @@ export default function UserProfilePage() {
           </div>
         ) : !user ? (
           /* Unauthenticated State */
-          <div className="bg-card border border-border rounded-3xl p-10 shadow-sm text-center space-y-5">
-            <div className="w-16 h-16 rounded-2xl bg-muted mx-auto flex items-center justify-center text-muted-foreground">
-              <User className="w-8 h-8" />
+          <div className="bg-card border border-border rounded-2xl sm:rounded-3xl p-6 sm:p-10 shadow-sm text-center space-y-4 sm:space-y-5">
+            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-muted mx-auto flex items-center justify-center text-muted-foreground">
+              <User className="w-7 h-7 sm:w-8 sm:h-8" />
             </div>
             <div className="space-y-1">
-              <h2 className="text-xl font-bold font-serif text-foreground">
+              <h2 className="text-lg sm:text-xl font-bold font-serif text-foreground">
                 You are not signed in
               </h2>
-              <p className="text-sm text-muted-foreground max-w-sm mx-auto">
+              <p className="text-xs sm:text-sm text-muted-foreground max-w-sm mx-auto">
                 Please sign in to view and customize your library member
                 profile.
               </p>
             </div>
             <div>
               <Link href="/sign-in">
-                <Button className="bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl px-6">
+                <Button className="bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl px-6 h-10">
                   Sign In to BookNook
                 </Button>
               </Link>
@@ -138,24 +138,24 @@ export default function UserProfilePage() {
           </div>
         ) : (
           /* Profile Card */
-          <div className="bg-card border border-border rounded-3xl overflow-hidden shadow-sm transition-all">
+          <div className="bg-card border border-border rounded-2xl sm:rounded-3xl overflow-hidden shadow-sm transition-all">
             {/* Top Decorative Banner */}
-            <div className="h-32 sm:h-40 bg-gradient-to-tr from-emerald-900 via-emerald-800 to-slate-900 relative">
+            <div className="h-28 sm:h-36 md:h-40 bg-gradient-to-tr from-emerald-900 via-emerald-800 to-slate-900 relative">
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
               <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:20px_20px]" />
 
-              <div className="absolute top-5 right-5 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/30 backdrop-blur-md text-emerald-100 text-[11px] font-medium border border-white/10 shadow-sm">
+              <div className="absolute top-3.5 right-3.5 sm:top-5 sm:right-5 flex items-center gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-black/30 backdrop-blur-md text-emerald-100 text-[10px] sm:text-[11px] font-medium border border-white/10 shadow-sm">
                 <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
                 <span>Member Profile</span>
               </div>
             </div>
 
             {/* Profile Content Body */}
-            <div className="px-6 sm:px-10 pb-8 pt-0 relative">
+            <div className="px-4 sm:px-8 md:px-10 pb-6 sm:pb-8 pt-0 relative">
               {/* Profile Picture & Main Identity Header */}
-              <div className="flex flex-col sm:flex-row items-center sm:items-end gap-5 sm:gap-6 mb-8">
-                <div className="relative -mt-16 sm:-mt-20 z-10 shrink-0">
-                  <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-full ring-[6px] ring-card bg-emerald-950 text-white shadow-xl flex items-center justify-center overflow-hidden select-none">
+              <div className="flex flex-col sm:flex-row items-center sm:items-end gap-4 sm:gap-6 mb-6 sm:mb-8">
+                <div className="relative -mt-12 sm:-mt-16 md:-mt-20 z-10 shrink-0">
+                  <div className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full ring-4 sm:ring-[6px] ring-card bg-emerald-950 text-white shadow-xl flex items-center justify-center overflow-hidden select-none">
                     {user.image ? (
                       <Image
                         src={user.image}
@@ -165,49 +165,49 @@ export default function UserProfilePage() {
                         height={128}
                       />
                     ) : (
-                      <span className="text-3xl sm:text-4xl font-bold font-serif tracking-wider text-emerald-100">
+                      <span className="text-2xl sm:text-3xl md:text-4xl font-bold font-serif tracking-wider text-emerald-100">
                         {initials}
                       </span>
                     )}
                   </div>
                   <div
                     title="Active Library Member"
-                    className="absolute bottom-2 right-2 w-5 h-5 bg-emerald-500 rounded-full border-[3px] border-card shadow-sm"
+                    className="absolute bottom-1 right-1 sm:bottom-2 sm:right-2 w-4 h-4 sm:w-5 sm:h-5 bg-emerald-500 rounded-full border-2 sm:border-[3px] border-card shadow-sm"
                   />
                 </div>
 
-                <div className="flex-1 text-center sm:text-left mt-3 sm:mt-0 pb-1 sm:pb-3">
-                  <div className="flex flex-col sm:flex-row items-center sm:items-center gap-3 mb-2">
-                    <h1 className="text-2xl sm:text-3xl font-bold font-serif text-foreground tracking-tight">
+                <div className="flex-1 text-center sm:text-left mt-2 sm:mt-0 pb-1 sm:pb-3">
+                  <div className="flex flex-col sm:flex-row items-center sm:items-center gap-2 sm:gap-3 mb-1.5 sm:mb-2">
+                    <h1 className="text-xl sm:text-2xl md:text-3xl font-bold font-serif text-foreground tracking-tight">
                       {user.name}
                     </h1>
                     <Badge
                       variant="secondary"
                       className="bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800 text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-full"
                     >
-                      <ShieldCheck className="w-3.5 h-3.5 mr-1.5" />
+                      <ShieldCheck className="w-3.5 h-3.5 mr-1" />
                       Active Reader
                     </Badge>
                   </div>
 
-                  <div className="flex items-center justify-center sm:justify-start gap-2 text-sm text-muted-foreground font-medium">
-                    <Mail className="w-4 h-4 opacity-70 shrink-0" />
-                    <span>{user.email}</span>
+                  <div className="flex items-center justify-center sm:justify-start gap-1.5 text-xs sm:text-sm text-muted-foreground font-medium">
+                    <Mail className="w-3.5 h-3.5 opacity-70 shrink-0" />
+                    <span className="truncate">{user.email}</span>
                   </div>
                 </div>
               </div>
 
               {/* Edit Section */}
-              <div className="pt-6 border-t border-border">
+              <div className="pt-5 sm:pt-6 border-t border-border">
                 <div className="space-y-4">
                   {/* Header & Edit Button */}
                   <div className="flex items-center justify-between">
                     <div>
-                      <h2 className="text-sm font-semibold text-foreground flex items-center gap-2">
+                      <h2 className="text-xs sm:text-sm font-semibold text-foreground flex items-center gap-2">
                         <User className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                         Profile Info
                       </h2>
-                      <p className="text-xs text-muted-foreground mt-0.5">
+                      <p className="text-[11px] sm:text-xs text-muted-foreground mt-0.5">
                         This info is visible to community members on your books
                         and borrows.
                       </p>
@@ -227,14 +227,14 @@ export default function UserProfilePage() {
                   {isEditingName ? (
                     <form
                       onSubmit={handleUpdateName}
-                      className="p-4 rounded-2xl bg-muted/40 border border-border space-y-4 animate-in fade-in slide-in-from-top-1"
+                      className="p-3.5 sm:p-4 rounded-2xl bg-muted/40 border border-border space-y-3 sm:space-y-4 animate-in fade-in slide-in-from-top-1"
                     >
-                      <div className="space-y-4">
-                        {/* Display Name Input (Uncontrolled) */}
+                      <div className="space-y-3 sm:space-y-4">
+                        {/* Display Name Input */}
                         <div className="space-y-1.5">
                           <label
                             htmlFor="nameInput"
-                            className="text-xs font-medium text-foreground block"
+                            className="text-[11px] sm:text-xs font-medium text-foreground block"
                           >
                             New Display Name
                           </label>
@@ -245,7 +245,7 @@ export default function UserProfilePage() {
                               type="text"
                               defaultValue={user.name}
                               placeholder="Enter your full name"
-                              className="h-10 px-3 text-sm rounded-xl bg-background border-border focus-visible:ring-emerald-500"
+                              className="h-10 px-3 text-base sm:text-sm rounded-xl bg-background border-border focus-visible:ring-emerald-500"
                               disabled={isSubmitting}
                               autoFocus
                               required
@@ -253,11 +253,11 @@ export default function UserProfilePage() {
                           </div>
                         </div>
 
-                        {/* Profile Image URL Input (Uncontrolled) */}
+                        {/* Profile Image URL Input */}
                         <div className="space-y-1.5">
                           <label
                             htmlFor="imageInput"
-                            className="text-xs font-medium text-foreground block"
+                            className="text-[11px] sm:text-xs font-medium text-foreground block"
                           >
                             Profile Image URL
                           </label>
@@ -268,7 +268,7 @@ export default function UserProfilePage() {
                               type="url"
                               defaultValue={user.image || ""}
                               placeholder="https://example.com/avatar.jpg"
-                              className="h-10 px-3 text-sm rounded-xl bg-background border-border focus-visible:ring-emerald-500"
+                              className="h-10 px-3 text-base sm:text-sm rounded-xl bg-background border-border focus-visible:ring-emerald-500"
                               disabled={isSubmitting}
                             />
                           </div>
@@ -307,10 +307,10 @@ export default function UserProfilePage() {
                     </form>
                   ) : (
                     <div className="flex items-center justify-between p-3.5 rounded-xl bg-muted/40 border border-border text-sm">
-                      <span className="font-medium text-foreground">
+                      <span className="font-medium text-foreground truncate mr-2">
                         {user.name}
                       </span>
-                      <span className="text-xs text-muted-foreground font-mono">
+                      <span className="text-xs text-muted-foreground font-mono shrink-0">
                         Saved
                       </span>
                     </div>
@@ -319,30 +319,30 @@ export default function UserProfilePage() {
               </div>
 
               {/* Extra Account Details */}
-              <div className="mt-8 pt-6 border-t border-border grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="p-4 rounded-2xl bg-muted/30 border border-border/80 flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 flex items-center justify-center shrink-0">
+              <div className="mt-6 sm:mt-8 pt-5 sm:pt-6 border-t border-border grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                <div className="p-3.5 sm:p-4 rounded-2xl bg-muted/30 border border-border/80 flex items-center gap-3">
+                  <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 flex items-center justify-center shrink-0">
                     <Calendar className="w-4 h-4" />
                   </div>
-                  <div>
-                    <p className="text-xs text-muted-foreground font-medium">
+                  <div className="min-w-0">
+                    <p className="text-[11px] sm:text-xs text-muted-foreground font-medium">
                       Member Since
                     </p>
-                    <p className="text-sm font-semibold text-foreground">
+                    <p className="text-xs sm:text-sm font-semibold text-foreground truncate">
                       {memberSince}
                     </p>
                   </div>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-muted/30 border border-border/80 flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-400 flex items-center justify-center shrink-0">
+                <div className="p-3.5 sm:p-4 rounded-2xl bg-muted/30 border border-border/80 flex items-center gap-3">
+                  <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-400 flex items-center justify-center shrink-0">
                     <BookOpen className="w-4 h-4" />
                   </div>
-                  <div>
-                    <p className="text-xs text-muted-foreground font-medium">
+                  <div className="min-w-0">
+                    <p className="text-[11px] sm:text-xs text-muted-foreground font-medium">
                       Account Status
                     </p>
-                    <p className="text-sm font-semibold text-foreground">
+                    <p className="text-xs sm:text-sm font-semibold text-foreground truncate">
                       Active Community Reader
                     </p>
                   </div>
