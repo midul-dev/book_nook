@@ -1,7 +1,13 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { BookCategory } from "@/types";
-import { PlusCircle, Sparkles, CheckCircle2, ArrowLeft, Loader2 } from "lucide-react";
+import {
+  PlusCircle,
+  Sparkles,
+  CheckCircle2,
+  ArrowLeft,
+  Loader2,
+} from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -34,18 +40,24 @@ export default function AddBooksPage() {
       userName: string;
       userEmail: string;
     };
+    const addedBooks = {
+      ...newBook,
+      copies: Number(newBook.copies),
+    };
 
     const token = await jwtAuthTokenClient();
-
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/add-books`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/add-books`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(addedBooks),
         },
-        body: JSON.stringify(newBook),
-      });
+      );
       const data = await res.json();
       if (res.ok) {
         toast.success(data.message);
@@ -95,7 +107,8 @@ export default function AddBooksPage() {
                   size="sm"
                   onClick={() => setIsSubmitted(false)}
                 >
-                  <span>Add Another Book</span> <PlusCircle className="ml-1 w-4 h-4" />
+                  <span>Add Another Book</span>{" "}
+                  <PlusCircle className="ml-1 w-4 h-4" />
                 </Button>
                 <Link href="/my-books">
                   <Button

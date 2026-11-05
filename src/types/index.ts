@@ -6,7 +6,7 @@ export interface IBook {
   title: string;
   author: string;
   category: BookCategory;
-  copies: string;
+  copies: number;
   image: string;
   description: string;
   userName?: string,

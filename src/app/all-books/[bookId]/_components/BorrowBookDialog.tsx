@@ -34,6 +34,7 @@ export function BorrowBookDialog({ book }: { book: IBook }) {
   //  (Format: DD-MM-YYYY)
   const today = new Date();
   const borrowDateStr = `${String(today.getDate()).padStart(2, "0")}-${String(today.getMonth() + 1).padStart(2, "0")}-${today.getFullYear()}`;
+  const isOutOfStock = book.copies === 0;
 
   const handleBorrow = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -52,16 +53,19 @@ export function BorrowBookDialog({ book }: { book: IBook }) {
     };
 
     //  POST API
-   const token = await jwtAuthTokenClient();
+    const token = await jwtAuthTokenClient();
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/add-borrow`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-           Authorization: `Bearer ${token}`,
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/add-borrow`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(borrowBooks),
         },
-        body: JSON.stringify(borrowBooks),
-      });
+      );
       const data = await res.json();
       if (res.ok) {
         setIsOpen(false);
@@ -89,17 +93,16 @@ export function BorrowBookDialog({ book }: { book: IBook }) {
       {/* Modal Content */}
       <DialogContent className="w-[94vw] sm:max-w-[440px] rounded-2xl sm:rounded-[1.5rem] p-4 sm:p-6 border border-border shadow-2xl bg-card">
         <DialogHeader className="text-left space-y-0 pb-3 sm:pb-4 border-b border-border/60">
-          {/* API Tag (Orange Text) */}
-          <div className="text-[10px] font-bold text-amber-600 tracking-widest uppercase mb-1">
-            POST /BORROWS • $INC: -1
-          </div>
           {/* Title */}
           <DialogTitle className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-foreground">
             Borrow This Book
           </DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleBorrow} className="pt-3 sm:pt-4 space-y-4 sm:space-y-5">
+        <form
+          onSubmit={handleBorrow}
+          className="pt-3 sm:pt-4 space-y-4 sm:space-y-5"
+        >
           {/* Book Info Card */}
           <div className="flex items-center gap-3.5 bg-muted/40 border border-border/60 rounded-xl p-3 sm:p-3.5 shadow-sm">
             <div className="relative h-14 w-11 shrink-0 overflow-hidden rounded bg-muted shadow-sm">
@@ -118,7 +121,7 @@ export function BorrowBookDialog({ book }: { book: IBook }) {
                 by {book?.author || "Miriam Al-Mansoor"}
               </span>
               <span className="text-[11px] font-semibold text-emerald-800 dark:text-emerald-400 mt-1">
-                {book?.copies || 3} copies currently on shelf
+                {book?.copies || 0} copies currently on shelf
               </span>
             </div>
           </div>
@@ -190,14 +193,20 @@ export function BorrowBookDialog({ book }: { book: IBook }) {
 
             <button
               type="submit"
-              disabled={isBorrowing}
-              className="h-10 px-4 bg-[#164e38] hover:bg-[#123e2d] text-white rounded-xl text-sm font-medium transition-colors cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              disabled={isOutOfStock || isBorrowing}
+              className={`h-10 px-4 rounded-xl text-sm font-medium transition-colors flex items-center justify-center gap-2 ${
+                isOutOfStock
+                  ? "bg-muted text-muted-foreground border border-border cursor-not-allowed opacity-70"
+                  : "bg-[#164e38] hover:bg-[#123e2d] text-white cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
+              }`}
             >
               {isBorrowing ? (
                 <>
                   <Loader2 className="w-4 h-4 animate-spin" />
-                  <span>Confirming...</span>
+                  <span>Borrowing...</span>
                 </>
+              ) : isOutOfStock ? (
+                <span>Out of Stock</span>
               ) : (
                 <span>Confirm Borrow</span>
               )}

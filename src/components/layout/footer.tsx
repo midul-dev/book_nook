@@ -128,8 +128,8 @@ export function Footer() {
               <li className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                 <span>
-                  House 42, Road 7, Dhanmondi <br />
-                  Reading Quarter, Dhaka 1209
+                  House 36, Road 12, Nikunja 2, <br />
+                  Dhaka 1229
                 </span>
               </li>
               <li className="flex items-center gap-2.5">
@@ -138,12 +138,12 @@ export function Footer() {
                   href="mailto:librarian@booknook.org"
                   className="hover:text-white transition"
                 >
-                  librarian@booknook.org
+                  midul.mahmud20@gmail.com
                 </a>
               </li>
               <li className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>+880 1711-482910 (Daily 9AM – 9PM)</span>
+                <span>+880 1608-046830 (Daily 9AM – 9PM)</span>
               </li>
             </ul>
           </div>
@@ -152,15 +152,14 @@ export function Footer() {
         {/* Bottom Sub-footer */}
         <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-stone-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-stone-400 font-mono text-center sm:text-left">
           <p>
-            © 2026 BookNook Online Library. All rights reserved. Built with
-            Next.js App Router, BetterAuth, Express & MongoDB
+            © 2026 BookNook Online Library. All rights reserved. Built by Midul Mahmud.
           </p>
           <div className="flex flex-wrap items-center justify-center sm:justify-end gap-2 text-stone-400">
-            <span>SPA Reload-Safe</span>
+            <span>Add</span>
             <span>•</span>
-            <span className="text-emerald-400">JWT Verified</span>
+            <span className="text-emerald-400">Borrow</span>
             <span>•</span>
-            <span>$inc Atomic Inventory</span>
+            <span>Return</span>
           </div>
         </div>
       </div>
