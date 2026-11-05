@@ -15,7 +15,7 @@ export default async function BookDetailPage({ params }: Props) {
 
   const token = await jwtAuthTokenServer();
 
-  const res = await fetch(`${process.env.SERVER_URL}/all-books/${bookId}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/all-books/${bookId}`, {
     cache: "no-store",
     headers: {
       Authorization: `Bearer ${token}`,

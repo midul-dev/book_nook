@@ -25,7 +25,7 @@ export function DeleteBookDialog({ book }: { book: IBook }) {
     setISDeleting(true);
 
     const token = await jwtAuthTokenClient();
-    const res = await fetch(`${process.env.SERVER_URL}/delete-book/${bookId}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/delete-book/${bookId}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,

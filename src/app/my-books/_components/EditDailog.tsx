@@ -32,7 +32,7 @@ export function EditBookDialog({ book }: { book: IBook }) {
     const token = await jwtAuthTokenClient();
     try {
       const res = await fetch(
-        `${process.env.SERVER_URL}/update-book/${book._id}`,
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/update-book/${book._id}`,
         {
           method: "PATCH",
           headers: {

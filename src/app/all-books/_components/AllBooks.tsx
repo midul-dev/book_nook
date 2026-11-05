@@ -23,10 +23,10 @@ const AllBooks = ({ books }: { books: IBook[] }) => {
   const filteredBooks = books.filter((book) => {
     const matchesCategory =
       selectedCategory === "All" ||
-      book.category.toLowerCase() === selectedCategory.toLowerCase();
+      book.category?.toLowerCase() === selectedCategory.toLowerCase();
     const matchesSearch =
-      book.title.toLowerCase().includes(search.toLowerCase()) ||
-      book.author.toLowerCase().includes(search.toLowerCase());
+      book.title?.toLowerCase().includes(search.toLowerCase()) ||
+      book.author?.toLowerCase().includes(search.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 

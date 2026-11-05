@@ -44,7 +44,7 @@ export function ReturnBookDialog({ book }: { book: IBorrowItem }) {
     try {
       // First try /return-book endpoint, if not available try delete-borrow
       const res = await fetch(
-        `${process.env.SERVER_URL}/return-book/${borrowId}`,
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/return-book/${borrowId}`,
         {
           method: "DELETE",
           headers: {

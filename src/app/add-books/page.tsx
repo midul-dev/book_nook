@@ -34,7 +34,7 @@ export default function AddBooksPage() {
     const token = await jwtAuthTokenClient();
 
     try {
-      const res = await fetch(`${process.env.SERVER_URL}/add-books`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/add-books`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

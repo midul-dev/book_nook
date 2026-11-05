@@ -20,7 +20,7 @@ export default async function MyBorrowsPage() {
   try {
     if (userEmail) {
       const res = await fetch(
-        `${process.env.SERVER_URL}/my-borrows?email=${userEmail}`,
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/my-borrows?email=${userEmail}`,
         {
           headers: {
             authorization: `Bearer ${token}`,

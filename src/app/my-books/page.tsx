@@ -16,7 +16,7 @@ export default async function MyBooksPage() {
   const token = await jwtAuthTokenServer();
 
   const res = await fetch(
-    `${process.env.SERVER_URL}/my-books?email=${userEmail}`,
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/my-books?email=${userEmail}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

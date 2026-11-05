@@ -52,7 +52,7 @@ export function BorrowBookDialog({ book }: { book: IBook }) {
 
     //  POST API
     try {
-      const res = await fetch(`${process.env.SERVER_URL}/add-borrow`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/add-borrow`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
