@@ -50,6 +50,7 @@ export default function AddBooksPage() {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/add-books`,
         {
+          cache: "no-store",
           method: "POST",
           headers: {
             "Content-Type": "application/json",

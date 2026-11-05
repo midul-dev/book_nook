@@ -23,6 +23,7 @@ export default async function MyBooksPage() {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/my-books?email=${userEmail}`,
     {
+      cache: "no-store",
       headers: {
         Authorization: `Bearer ${token}`,
       },

@@ -9,7 +9,9 @@ export const metadata: Metadata = {
 };
 
 export default async function AllBooksPage() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/all-books`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/all-books`,{
+    cache: "no-store",
+  });
   const books = await res.json();
   console.log("Fetched books:", books);
   return (

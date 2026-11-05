@@ -34,6 +34,7 @@ export function EditBookDialog({ book }: { book: IBook }) {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/update-book/${book._id}`,
         {
+          cache: "no-store",
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",

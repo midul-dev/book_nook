@@ -12,7 +12,9 @@ const BorrowProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (user?.email) {
-      fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/borrow-count?email=${user.email}`)
+      fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/borrow-count?email=${user.email}`,{
+        cache: "no-store",
+      })
         .then((res) => res.json())
         .then((data) => {
           if (data.count) {

@@ -46,6 +46,7 @@ export function ReturnBookDialog({ book }: { book: IBorrowItem }) {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/return-book/${borrowId}`,
         {
+          cache: "no-store",
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",

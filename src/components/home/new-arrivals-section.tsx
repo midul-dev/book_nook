@@ -5,7 +5,9 @@ import { Plus, ArrowRight, BookOpen } from "lucide-react";
 import Link from "next/link";
 
 export async function NewArrivalsSection() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/latest-books`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/latest-books`,{
+    cache: "no-store",
+  });
   const displayedBooks: IBook[] = await res.json();
 
   return (

@@ -27,6 +27,7 @@ export default async function MyBorrowsPage() {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/my-borrows?email=${userEmail}`,
         {
+          cache: "no-store",
           headers: {
             authorization: `Bearer ${token}`,
           },
