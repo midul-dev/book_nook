@@ -13,7 +13,10 @@ const openSans = Open_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "BookNook | Community Library - Explore Curated Books",
+  title: {
+    default: "BookNook | Home",
+    template: "%s",
+  },
   description:
     "A neighborhood online library built around a simple community promise: add a book from your shelf, borrow a book for a few days, and return it for the next reader.",
 };

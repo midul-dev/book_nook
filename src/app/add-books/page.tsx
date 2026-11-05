@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BookCategory } from "@/types";
 import { PlusCircle, Sparkles, CheckCircle2, ArrowLeft, Loader2 } from "lucide-react";
 import Link from "next/link";
@@ -11,6 +11,10 @@ import { jwtAuthTokenClient } from "@/lib/functions/jwt_auth_tokens/jwtAuthToken
 export default function AddBooksPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    document.title = "BookNook | Add Book";
+  }, []);
 
   const { data: session } = useSession();
   const user = session?.user;

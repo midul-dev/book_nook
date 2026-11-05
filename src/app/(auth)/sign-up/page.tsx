@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
@@ -25,6 +25,10 @@ import { toast } from "sonner";
 
 export default function SignUpPage() {
   const router = useRouter();
+
+  useEffect(() => {
+    document.title = "BookNook | Sign Up";
+  }, []);
 
   const [formData, setFormData] = useState({
     name: "",

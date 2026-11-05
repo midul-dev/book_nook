@@ -1,4 +1,5 @@
 import React from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Bookmark, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -7,6 +8,10 @@ import { IBorrowItem } from "./_components/ReturnDialog";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { jwtAuthTokenServer } from "@/lib/functions/jwt_auth_tokens/jwtAuthTokenServer";
+
+export const metadata: Metadata = {
+  title: "BookNook | My Borrows",
+};
 
 export default async function MyBorrowsPage() {
   const session = await auth.api.getSession({

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   User,
@@ -24,6 +24,10 @@ import { toast } from "sonner";
 export default function UserProfilePage() {
   const { data: session, isPending } = useSession();
   const user = session?.user;
+
+  useEffect(() => {
+    document.title = "BookNook | User Profile";
+  }, []);
 
   // শুধু UI টগল করার জন্য স্টেট
   const [isEditingName, setIsEditingName] = useState(false);

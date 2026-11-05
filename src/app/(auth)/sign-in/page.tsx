@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,10 +19,14 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 
 export default function SignInPage() {
-const router = useRouter();
-const searchParams = useSearchParams()
-const terget = searchParams.get("redirect")
-console.log(terget)
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const terget = searchParams.get("redirect");
+  console.log(terget);
+
+  useEffect(() => {
+    document.title = "BookNook | Sign In";
+  }, []);
 
   const [formData, setFormData] = useState({
     email: "",

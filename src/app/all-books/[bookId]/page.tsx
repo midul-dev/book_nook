@@ -1,4 +1,5 @@
 import React from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, BookOpen } from "lucide-react";
@@ -8,6 +9,32 @@ import { jwtAuthTokenServer } from "@/lib/functions/jwt_auth_tokens/jwtAuthToken
 
 interface Props {
   params: Promise<{ bookId: string }>;
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const token = await jwtAuthTokenServer();
+  const { bookId } = await params;
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/all-books/${bookId}`, {
+      cache: "no-store",
+      headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    });
+    if (res.ok) {
+      const book = await res.json();
+      if (book?.title) {
+        return {
+          title: `BookNook | ${book.title}`,
+        };
+      }
+    }
+  } catch {
+    // fallback
+  }
+  return {
+    title: "BookNook | Book Details",
+  };
 }
 
 export default async function BookDetailPage({ params }: Props) {

@@ -1,7 +1,12 @@
+import type { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 import AllBooks from "./_components/AllBooks";
 import { Plus } from "lucide-react";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "BookNook | All Books",
+};
 
 export default async function AllBooksPage() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/all-books`);
