@@ -51,7 +51,7 @@ export function Navbar() {
   const handleSignOut = async () => {
     await signOut();
     router.push("/");
-    toast.success("Successfully signed out! Redirecting to homepage...");
+    toast.success("Signed out successfully!");
     setIsProfileOpen(false);
   };
 
