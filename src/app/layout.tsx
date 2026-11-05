@@ -19,6 +19,13 @@ export const metadata: Metadata = {
   },
   description:
     "A neighborhood online library built around a simple community promise: add a book from your shelf, borrow a book for a few days, and return it for the next reader.",
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+    apple: [{ url: "/apple-icon" }],
+  },
 };
 
 export default function RootLayout({
