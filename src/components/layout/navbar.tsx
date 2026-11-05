@@ -55,13 +55,17 @@ export function Navbar() {
     setIsProfileOpen(false);
   };
 
-  const navItems = [
+  const publicRoute = [
     { name: "Home", href: "/" },
     { name: "All Books", href: "/all-books" },
+  ];
+  const privateRoute = [
     { name: "Add Book", href: "/add-books" },
     { name: "My Books", href: "/my-books" },
     { name: "My Borrows", href: "/my-borrows", badge: borrowCount },
-  ];
+  ]
+
+  const navItems = user ? [...publicRoute, ...privateRoute] : publicRoute
 
   return (
     <header className="sticky top-0 z-40 w-full bg-background/95 backdrop-blur-md border-b border-border transition-colors duration-200">
