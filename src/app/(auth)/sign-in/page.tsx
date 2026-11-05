@@ -74,7 +74,7 @@ console.log(terget)
   {
     email: formData.email,
     password: formData.password,
-    callbackURL: "/",
+    callbackURL: terget ?? undefined,
     rememberMe: formData.rememberMe,
   },
   {
